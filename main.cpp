@@ -17,20 +17,10 @@ using namespace std;
 template <class T>
 void insert(Node<T>* &list, const T& insertValue) ///to pass address use & to pass by reference
 {
-  //we have the headptr and we need to insert at the head, update the head to newnode, and updated newnodes next to previous headPtr
-
   //Create a node to hold the insertvalue we pass dont forget the types!
-
-  if (*list != nullptr) //make sure to dereference the pointer
-    {
-      T *headdata = list->getItem(); //getting the current data for the head.
-      newNode->setNext(headdata);  //newNode is a pointer -> dereferencing, setting the newNode's next to original head data.
-      list->setItem(newNode);      //list is a pointer -> dereferencing, setting the list's head to newNode
-    }
-   else   //we only execute this else if the list is empty
-   {
-      list->setItem(newNode);
-   }
+Node<T> *newNode = new Node<T>(insertValue,list);
+//newNode->setNext = (*list);        //this takes the starting address value for the linked list and moves it to the "next node in list" position
+//(*list) = newNode;               //this moves the address of the head of the list to the new node we created, updating the list to the proper headptr
 }
 
 
@@ -85,7 +75,7 @@ while( cin >> idata)   // Keeps reading values from cin into data
 
 //if (iList->getItem == nullptr) {break;} // if the list is empty don't print Integers title
 cout << "Integers: \n";       // beginning of the integer list
-while((iList->getItem()) != nullptr) //while there is an item in the linked list execute this loop
+while(iList != nullptr) //while there is an item in the linked list execute this loop
 {
   int iresults = iList->getItem();
   cout << iresults << endl;
@@ -107,7 +97,7 @@ while( cin >> sdata)   // Keeps reading values from cin into data
    // Insert your code here
 //if (sList->getItem() == nullptr) {return 0;} // if the list is empty don't print Integers title
 cout << "Integers: \n";       // beginning of the integer list
-while(sList->getItem() != nullptr) //while there is an item in the linked list execute this loop
+while(sList!= nullptr) //while there is an item in the linked list execute this loop
 {
   string sresults = sList->getItem();
   cout << sresults << endl;
