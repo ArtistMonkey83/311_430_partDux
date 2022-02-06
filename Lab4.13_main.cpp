@@ -91,7 +91,7 @@ int main()
    // get durarion. To cast it to proper unit
    // use duration cast method
    auto fibRSpeed = duration_cast<microseconds>(stopI - startI);
-   print(fibRSpeed);
+   //printf(fibRSpeed.count());
 
 
 
@@ -107,7 +107,7 @@ int main()
    // get durarion. To cast it to proper unit
    // use duration cast method
    auto fibISpeed = duration_cast<microseconds>(stopR - startR);
-   print(fibISpeed);
+   //printf(fibISpeed.count());
 
    //while (fibI(userInput)==fibR(userInput))
    //cout<< "Fibonacci I(" << userInput << ") is " << fibI(userInput) << endl;
@@ -119,9 +119,9 @@ int main()
   //cout << "fibRSpeed == "<< fibRSpeed;
 
 
-  if (fibRSpeed < fibISpeed)
+  if (fibRSpeed.count() < fibISpeed.count())
   cout << "fibR() was faster";
-  if ((fibISpeed)=(fibRSpeed))
+  if ((fibISpeed)==(fibRSpeed))
   cout << "fibR() and fibI() were tied";
   else
   cout << "fibI() was faster";
