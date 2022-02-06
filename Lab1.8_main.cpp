@@ -67,9 +67,17 @@ Node<string>* sList = nullptr;   //declaring a pointer to a node of type string 
 	//    x1, x2, x3, ..., xN.
 
    // Insert your code here
-int idata;
-while( cin >> idata)   // Keeps reading values from cin into data
-{insert(iList,idata);} //Insert that data into the integer list
+int idata,numInts,numStrings;
+cin >> numInts;
+cout << "numInts ==" << numInts <<endl;
+
+for ( int i = 0; i == numInts; i++){cin >>idata; insert(iList,idata);}
+
+cin >>numStrings;
+cout << "numStrings=="<< numStrings <<endl;
+
+//while( cin >> idata)   // Keeps reading values from cin into data
+//{insert(iList,idata);} //Insert that data into the integer list
 
 	// 4) Display the message "Integers:" on a single line
 	//    followed by the contents of iList.
@@ -92,6 +100,7 @@ printList(iList);
 
    // Insert your code here
 string sdata;
+
 while( cin >> sdata)   // Keeps reading values from cin into data
 {
   insert(sList,sdata); //Insert that data into the string list
