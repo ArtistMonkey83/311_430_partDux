@@ -36,6 +36,7 @@ template<typename T>
    { cout << currNode -> getItem() << endl;
      currNode = currNode -> getNext();
    }
+   //return 0;
    //else
    //cout << "This is an empty list. \n";
  }
@@ -69,23 +70,27 @@ Node<string>* sList = nullptr;   //declaring a pointer to a node of type string 
    // Insert your code here
 int idata,numInts,numStrings;
 cin >> numInts;
-cout << "numInts ==" << numInts <<endl;
+//cout << "numInts ==" << numInts <<endl;
 
-for ( int i = 0; i == numInts; i++){cin >>idata; insert(iList,idata);}
+//while (cin >>idata)
+//for ( int i = 0; i == numInts; i++){insert(iList,idata);}
+
+do {
+  cin >> idata;
+  insert(iList,idata);
+  numInts-=1;
+} while(numInts>0);  // Keeps reading values from cin into data
+ //Insert that data into the integer list
 
 cin >>numStrings;
-cout << "numStrings=="<< numStrings <<endl;
-
-//while( cin >> idata)   // Keeps reading values from cin into data
-//{insert(iList,idata);} //Insert that data into the integer list
-
+//cout << "numStrings=="<< numStrings <<endl;
 	// 4) Display the message "Integers:" on a single line
 	//    followed by the contents of iList.
 
    // Insert your code here
 
 //if (iList->getItem == nullptr) {break;} // if the list is empty don't print Integers title
-cout << "Integers: \n";       // beginning of the integer list
+cout << "Integers:"<< endl;       // beginning of the integer list
 printList(iList);
 //while(iList != nullptr) //while there is an item in the linked list execute this loop
 //{
