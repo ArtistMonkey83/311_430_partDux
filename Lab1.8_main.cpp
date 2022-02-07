@@ -29,16 +29,19 @@ list = newNode;               //this moves the address of the head of the list t
 
 // Insert your code here
 template<typename T>
- T printList(Node<T>* list)  //the function takes the pointer to a list for printing & will screw it up!
- {
-   Node<T>* currNode = list;
-   while(currNode != nullptr) //as long as there is a node
-   { cout << currNode -> getItem() << endl;
-     currNode = currNode -> getNext();
-   }
+void display( Node<T> *headPtr )
+{
+	Node<T> *currNodePtr = headPtr;
+	while( currNodePtr ) // as long as not nullptr
+	{
+		cout << currNodePtr->getItem() << endl;
+		currNodePtr = currNodePtr->getNext();
+	}
+
+}
    //else
    //cout << "This is an empty list. \n";
- }
+
 
 // Driver to read words from standard input (via cin) inserting
 // them one at a time into an initially empty linked list.
@@ -90,7 +93,7 @@ cin >>numStrings;
 
 //if (iList->getItem == nullptr) {break;} // if the list is empty don't print Integers title
 cout << "Integers: "<< endl;       // beginning of the integer list
-printList(iList);
+display(iList);
 //while(iList != nullptr) //while there is an item in the linked list execute this loop
 //{
 //  int iresults = iList->getItem();
@@ -113,7 +116,7 @@ while( cin >> sdata)   // Keeps reading values from cin into data
 	// 6) Display the message "Strings:" on a single line
 	//    followed by the contents of iList.
 cout << "Strings:" << endl;
-printList(sList);
+display(sList);
    // Insert your code here
 //if (sList->getItem() == nullptr) {return 0;} // if the list is empty don't print Integers title
 //cout << "Integers: \n";       // beginning of the integer list
