@@ -36,7 +36,6 @@ template<typename T>
    { cout << currNode -> getItem() << endl;
      currNode = currNode -> getNext();
    }
-   //return 0;
    //else
    //cout << "This is an empty list. \n";
  }
@@ -90,7 +89,7 @@ cin >>numStrings;
    // Insert your code here
 
 //if (iList->getItem == nullptr) {break;} // if the list is empty don't print Integers title
-cout << "Integers:"<< endl;       // beginning of the integer list
+cout << "Integers: "<< endl;       // beginning of the integer list
 printList(iList);
 //while(iList != nullptr) //while there is an item in the linked list execute this loop
 //{
