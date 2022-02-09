@@ -52,7 +52,7 @@ void display( Node<T> *currNodePtr )
    cout<< " " <<currNodePtr->getItem();
    //cout << endl;
   }
-
+  //cout << endl;
 }
 
 int main()
@@ -84,6 +84,7 @@ int main()
 
  cout << "Contents:"<< endl;
  display(myList);
+ cout << endl;
 
  // (4) Read in values from standard input. Non-negative
  //     values are removed from myList and a negative
@@ -100,8 +101,8 @@ int main()
  //     in the order they were entered (hence, the display()
  //     function displays myList in reverse order!
 
- cout << endl << "After remove() operations:"<<endl;
+ cout << "After remove() operations:"<<endl;
  display(myList);
-
+ cout << endl;
  return 0;
 }
