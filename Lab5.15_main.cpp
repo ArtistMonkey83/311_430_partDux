@@ -45,8 +45,9 @@ cout << "Original vector: "<< endl;
 for( int i =0; i < data.size(); i++)
 {
   cout << " " << data[i];
-  if (i == (data.size()-1)) { cout << endl;}
+  //if (i == (data.size()-1)) { cout << endl;}
 }
+cout <<endl;
 
 // STEP 3: Use the built-in C++ sort() function to sort in *ascending* order.
 sort(data.begin(),data.end());
@@ -57,9 +58,9 @@ cout << "Sorted (ascending) vector:" << endl;
 for( int i =0; i < data.size(); i++)
 {
   cout << " " << data[i];
-  if (i == (data.size()-1)) { cout << endl;}
+  //if (i == (data.size()-1)) { cout << endl;}
 }
-
+cout <<endl;
 // STEP 5: Use the built-in C++ reverse() function to reverse the contents of the vector.
 reverse(data.begin(), data.end());
 
@@ -69,8 +70,8 @@ cout << "Sorted (descending) vector:"<< endl;
 for( int i =0; i < data.size(); i++)
 {
   cout << " " << data[i];
-  if (i == (data.size()-1)) { cout << endl;}
+//  if (i == (data.size()-1)) { cout << endl;}
 }
-
+cout <<endl;
    return 0;
 }

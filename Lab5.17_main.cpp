@@ -50,7 +50,8 @@ void display( const vector< T > &L )
 
 bool sortByName(item a, item b)
 {
-  return (a.name < b.name);
+  if(a.unitPrice == b.unitPrice) { return (a.name <b.name);}
+  return (a.unitPrice < b.unitPrice);
 }
 
 // DRIVER FUNCTION
@@ -84,19 +85,23 @@ int main()
 
 // STEP 2: Display the grocery items stored in the vector in the
 //         order they were read in.
-
+  cout << "Original list: "<<endl;
   display(myList);
+  cout <<endl;
 // STEP 3: Use the built-in C++ sort() function to sort in *ascending* order.
   sort(myList.begin(), myList.end(),sortByName); // I am missing my begining and ending index (.begin/.end)
 
 // STEP 4: Display the vector contents in *ascending* order.
+  cout << "Sorted (ascending) list:"<<endl;
   display(myList);
-
+  cout <<endl;
 // STEP 5: Use the built-in C++ reverse() function to reverse the contents of the vector.
   reverse(myList.begin(), myList.end());
 
 // STEP 6: Display the vector contents in *descending* order.
+  cout << "Sorted (descending) list:"<<endl;
   display(myList);
+  cout <<endl;
 
    return 0;
 }
