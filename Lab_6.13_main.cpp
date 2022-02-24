@@ -92,7 +92,7 @@ void addThis(ItemType& data)
 {
   //cout << accumulator << "accumulator " <<endl;
   //cout << data << "data" << endl;
-  accumulator = accumulator + data;
+  accumulator = accumulator +data;
   //cout << accumulator << "total is " <<endl;
 }
 
@@ -203,15 +203,15 @@ Sum of node values = 320
     cedar.preorderTraverse(doubleThis);
     cedar.preorderTraverse(display);
     cout << endl;
-    cedar.inorderTraverse(doubleThis);
+    //cedar.inorderTraverse(doubleThis);
     cedar.inorderTraverse(display);
     //cedar.inorderTraverse(display);
     cout << endl;
-    cedar.postorderTraverse(doubleThis);
-    cedar.postorderTraverse(doubleThis);
+    //cedar.postorderTraverse(doubleThis);
+    cedar.postorderTraverse(display);
     cout << endl;
     cedar.inorderTraverse(addThis);
-    cout << "Sum of node values = " << accumulator * 2 << endl << endl;
+    cout << "Sum of node values = " << accumulator << endl << endl;
 
 
    return 0;
