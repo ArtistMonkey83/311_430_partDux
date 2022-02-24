@@ -76,7 +76,9 @@ Carefully consider how you would implement the addThis() function. It needs to b
 #include "NotFoundException.h"
 #include "PrecondViolatedExcep.h"
 
-
+//Global Variable to pass into visit functions
+int accumulator= 0,
+    removeCount = 0;
 //user defined visit function to print item
 template< class ItemType>
 void display(ItemType& data)
@@ -88,7 +90,10 @@ void display(ItemType& data)
 template< class ItemType>
 void addThis(ItemType& data)
 {
-  int sum
+  //cout << accumulator << "accumulator " <<endl;
+  //cout << data << "data" << endl;
+  accumulator = accumulator + data;
+  //cout << accumulator << "total is " <<endl;
 }
 
 
@@ -131,16 +136,79 @@ Number of nodes: 8
 Sum of node values = 360
 
 */
-  cout << "Tree height = " << cedar.getHeight() << endl;
+  cout << "Tree height = " << (cedar.getHeight() - 1) << endl;
   cout << "Number of nodes: " << cedar.getNumberOfNodes() << endl;
-  inorderTraverse(display(cedar));
+  cedar.inorderTraverse(display);
+  cout << endl;
+  cedar.preorderTraverse(display);
+  cout << endl;
+  cedar.postorderTraverse(display);
+  cout << endl;
+  cedar.inorderTraverse(addThis);
+  cout << "Sum of node values = " << accumulator << endl <<endl;
+
+  accumulator = 0;
+
+  //Read in an unknown number of integers from standard input, and each integer should be deleted from your BST object.
+    if (userInput == 0)
+    {
+      while (cin >> userInput)
+      if(cedar.remove(userInput))
+      {removeCount++;}
+
+    }
+  //After all the deletions are completed, your program should report the number of successful remove() operations performed followed by the BST information displayed before the deletes (see above).
+  /*
+  4 successful remove() operations performed.
+  Tree height = 3
+  Number of nodes: 4
+   10 30 50 70
+   10 30 50 70
+   70 50 30 10
+  Sum of node values = 160
+
+  */
+    cout << removeCount << " successful remove() operations performed." <<endl;
+
+    cout << "Tree height = " << (cedar.getHeight() - 1) << endl;
+    cout << "Number of nodes: " << cedar.getNumberOfNodes() << endl;
+    cedar.inorderTraverse(display);
+    cout << endl;
+    cedar.preorderTraverse(display);
+    cout << endl;
+    cedar.postorderTraverse(display);
+    cout << endl;
+    cedar.inorderTraverse(addThis);
+    cout << "Sum of node values = " << accumulator << endl<<endl;
+
+    accumulator = 0;
+//Next, you need to double the value of each node in the BST object, display the message "Doubling tree node values …" and then, for the last time, the BST information displayed twice earlier.
+
+/*
+Doubling tree node values ...
+Tree height = 3
+Number of nodes: 4
+ 20 60 100 140
+ 20 60 100 140
+ 140 100 60 20
+Sum of node values = 320
+
+*/
+
+    cout << "Doubling tree node values ..." <<endl;
+
+    cout << "Tree height = " << (cedar.getHeight() - 1) << endl;
+    cout << "Number of nodes: " << cedar.getNumberOfNodes() << endl;
+    cedar.inorderTraverse(doubleThis);
+    cedar.inorderTraverse(display);
+    cout << endl;
+    cedar.preorderTraverse(display);
+    cout << endl;
+    cedar.postorderTraverse(display);
+    cout << endl;
+    cedar.inorderTraverse(addThis);
+    cout << "Sum of node values = " << accumulator << endl;
+
 
    return 0;
 }
-
-
-//Read in an unknown number of integers from standard input, and each integer should be deleted from your BST object.
-
-//After all the deletions are completed, your program should report the number of successful remove() operations performed followed by the BST information displayed before the deletes (see above).
-
-//Next, you need to double the value of each node in the BST object, display the message "Doubling tree node values …" and then, for the last time, the BST information displayed twice earlier.
