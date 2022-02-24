@@ -83,7 +83,7 @@ int accumulator= 0,
 template< class ItemType>
 void display(ItemType& data)
 {
-  cout << data << " ";
+  cout << " " << data;
 }
 
 //user defined visit function to add this item
@@ -101,7 +101,8 @@ void addThis(ItemType& data)
 template< class ItemType>
 void doubleThis(ItemType& data)
 {
-  cout << data * 2;
+  data = data *2;
+  //cout << " " << data * 2;
 }
 
 using namespace std;
@@ -138,9 +139,9 @@ Sum of node values = 360
 */
   cout << "Tree height = " << (cedar.getHeight() - 1) << endl;
   cout << "Number of nodes: " << cedar.getNumberOfNodes() << endl;
-  cedar.inorderTraverse(display);
-  cout << endl;
   cedar.preorderTraverse(display);
+  cout << endl;
+  cedar.inorderTraverse(display);
   cout << endl;
   cedar.postorderTraverse(display);
   cout << endl;
@@ -172,9 +173,9 @@ Sum of node values = 360
 
     cout << "Tree height = " << (cedar.getHeight() - 1) << endl;
     cout << "Number of nodes: " << cedar.getNumberOfNodes() << endl;
-    cedar.inorderTraverse(display);
-    cout << endl;
     cedar.preorderTraverse(display);
+    cout << endl;
+    cedar.inorderTraverse(display);
     cout << endl;
     cedar.postorderTraverse(display);
     cout << endl;
@@ -199,15 +200,18 @@ Sum of node values = 320
 
     cout << "Tree height = " << (cedar.getHeight() - 1) << endl;
     cout << "Number of nodes: " << cedar.getNumberOfNodes() << endl;
-    cedar.inorderTraverse(doubleThis);
-    cedar.inorderTraverse(display);
-    cout << endl;
+    cedar.preorderTraverse(doubleThis);
     cedar.preorderTraverse(display);
     cout << endl;
-    cedar.postorderTraverse(display);
+    cedar.inorderTraverse(doubleThis);
+    cedar.inorderTraverse(display);
+    //cedar.inorderTraverse(display);
+    cout << endl;
+    cedar.postorderTraverse(doubleThis);
+    cedar.postorderTraverse(doubleThis);
     cout << endl;
     cedar.inorderTraverse(addThis);
-    cout << "Sum of node values = " << accumulator << endl;
+    cout << "Sum of node values = " << accumulator * 2 << endl << endl;
 
 
    return 0;
