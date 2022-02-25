@@ -68,12 +68,19 @@ int main() {
 
    ifstream sortfile;          //creating an input output object
    string dataFromFile;       // Create a string to read numbers into
-
+   vector<int> data;          //Create a vector to hold the converted values from dataFromFile string which holds characters NOT integers, we need integers!
    sortfile.open( "numbers-50k-random.txt", ios::in);   //linking the sortfile object to a file
 
-   if(sortfile.is_open()){                  //check that we have valid file open
+   if(sortfile.is_open())                 //check that we have valid file open
      while(getline(sortfile,dataFromFile)){ //do stuff with the file's data if it is open
-     //read into a vector and then pass the vector to sort function string is storing a character split data from file and tokenize the numbers push the tokened values into the vector
+
+     //read into a vector
+                          //data.push_back(dataFromFile);
+
+     //pass the vector to sort function string is storing a character split data from file and tokenize the numbers
+     data.push_back(stoi(dataFromFile));
+     //push the tokened values into the vector
+     //data.push_back(dataFromFile);
 
      //1. split the line into just tokens parse characters into integers and remove whitespace
      //string to integers stoi()
@@ -85,7 +92,7 @@ int main() {
         //Get starting timepoint for Selection Sort
         auto startSS = high_resolution_clock::now();
         // Call the SelectionSort function
-        SelectionSort(sortfile, sortfile.size()); //pass vector with the info here
+        SelectionSort((int)(size_t)&data, data.size()); //pass vector with the info here
         //Get the ending timepoint for Selection Sort
         auto stopSS = high_resolution_clock::now();
         //Calculate the duration of Selection Sort
@@ -95,7 +102,7 @@ int main() {
         //Get starting timepoint for Insertion Sort
         auto startIS = high_resolution_clock::now();
         // Call the Insertion Sort function
-        InsertionSort(sortfile,  sortfile.size());
+        InsertionSort((int)(size_t)&data,  data.size());
         //Get the ending timepoint for Insertion Sort
         auto stopIS = high_resolution_clock::now();
         //Calculate the duration of Insertion Sort
@@ -105,16 +112,12 @@ int main() {
         //Get starting timepoint for Radix Sort
         auto startRS = high_resolution_clock::now();
         // Call the RadixSort function
-        RadixSort(sortfile,  sortfile.size());
+        RadixSort((int)(size_t)&data,  data.size());
         //Get the ending timepoint for Radix Sort
         auto stopRS = high_resolution_clock::now();
         //Calculate the duration of Radix Sort
         auto RSspeed = duration_cast<microseconds> (stopRS - startRS);
 
-     }
-
-
-   }
    return 0;
 }
 
