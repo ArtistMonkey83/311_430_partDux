@@ -38,12 +38,85 @@ You can use the numeric datasets provided in this zyLab for your experiments or 
 #include <vector>
 #include <algorithm>
 #include <chrono>
+#include <fstream>
 
 using namespace std;
-using namespace std::chrono:
+using namespace std::chrono;
 
 
 
+
+//Function Prototypes
+
+//Selection Sort implementation source Zybooks 5.5 c++: Selection sort
+void SelectionSort(int* numbers, int numbersSize);
+
+//insertion Sort source Zybooks 5.3 c++: Insertion sort
+void InsertionSort(int* numbers, int numbersSize);
+
+///RadixSort implementation source Zybooks 5.12 c++: Radix sort
+int RadixGetLength(int value);
+
+// Returns the maximum length, in number of digits, out of all array elements source Zybooks 5.12 c++: Radix sort
+int RadixGetMaxLength(int* numbers, int numbersSize);
+
+//source Zybooks 5.12 c++: Radix sort
+void RadixSort(int* numbers, int numbersSize);
+
+//Driving Function
+int main() {
+
+   ifstream sortfile;          //creating an input output object
+   string dataFromFile;       // Create a string to read numbers into
+
+   sortfile.open( "numbers-50k-random.txt", ios::in);   //linking the sortfile object to a file
+
+   if(sortfile.is_open()){                  //check that we have valid file open
+     while(getline(sortfile,dataFromFile)){ //do stuff with the file's data if it is open
+     //read into a vector and then pass the vector to sort function string is storing a character split data from file and tokenize the numbers push the tokened values into the vector
+
+     //1. split the line into just tokens parse characters into integers and remove whitespace
+     //string to integers stoi()
+     //for each token converted to integer push into vector
+    }
+     sortfile.close();
+
+     //SELECTION SORT
+        //Get starting timepoint for Selection Sort
+        auto startSS = high_resolution_clock::now();
+        // Call the SelectionSort function
+        SelectionSort(sortfile, sortfile.size()); //pass vector with the info here
+        //Get the ending timepoint for Selection Sort
+        auto stopSS = high_resolution_clock::now();
+        //Calculate the duration of Selection Sort
+        auto SSspeed = duration_cast<microseconds>(stopSS - startSS);
+
+     //INSERTION SORT
+        //Get starting timepoint for Insertion Sort
+        auto startIS = high_resolution_clock::now();
+        // Call the Insertion Sort function
+        InsertionSort(sortfile,  sortfile.size());
+        //Get the ending timepoint for Insertion Sort
+        auto stopIS = high_resolution_clock::now();
+        //Calculate the duration of Insertion Sort
+        auto ISspeed = duration_cast<microseconds> (stopIS - startIS);
+
+     //RADIX SORT
+        //Get starting timepoint for Radix Sort
+        auto startRS = high_resolution_clock::now();
+        // Call the RadixSort function
+        RadixSort(sortfile,  sortfile.size());
+        //Get the ending timepoint for Radix Sort
+        auto stopRS = high_resolution_clock::now();
+        //Calculate the duration of Radix Sort
+        auto RSspeed = duration_cast<microseconds> (stopRS - startRS);
+
+     }
+
+
+   }
+   return 0;
+}
 
 //
 //Selection Sort implementation source Zybooks 5.5 c++: Selection sort
@@ -63,7 +136,7 @@ void SelectionSort(int* numbers, int numbersSize) {
       numbers[indexSmallest] = temp;
    }
 }
-
+/*
 string ArrayToString(int* array, int arraySize) {
    // Special case for empty array
    if (0 == arraySize) {
@@ -83,7 +156,7 @@ string ArrayToString(int* array, int arraySize) {
    result += "]";
    return result;
 }
-
+*/
 //insertion Sort source Zybooks 5.3 c++: Insertion sort
 void InsertionSort(int* numbers, int numbersSize) {
    for (int i = 1; i < numbersSize; i++) {
@@ -96,26 +169,6 @@ void InsertionSort(int* numbers, int numbersSize) {
          j--;
       }
    }
-}
-
-string ArrayToString(int* array, int arraySize) {
-   // Special case for empty array
-   if (0 == arraySize) {
-      return string("[]");
-   }
-
-   // Start the string with the opening '[' and element 0
-   string result = "[" + to_string(array[0]);
-
-   // For each remaining element, append comma, space, and element
-   for (int i = 1; i < arraySize; i++) {
-      result += ", ";
-      result += to_string(array[i]);
-   }
-
-   // Add closing ']' and return result
-   result += "]";
-   return result;
 }
 
 ///
@@ -207,75 +260,4 @@ void RadixSort(int* numbers, int numbersSize) {
    for (int i = 0; i < 10; i++) {
       delete buckets[i];
    }
-}
-
-string ArrayToString(int* array, int arraySize) {
-   // Special case for empty array
-   if (0 == arraySize) {
-      return string("[]");
-   }
-
-   // Start the string with the opening '[' and element 0
-   string result = "[" + to_string(array[0]);
-
-   // For each remaining element, append comma, space, and element
-   for (int i = 1; i < arraySize; i++) {
-      result += ", ";
-      result += to_string(array[i]);
-   }
-
-   // Add closing ']' and return result
-   result += "]";
-   return result;
-}
-
-
-//selection sort main
-int main() {
-   // Creat a string to read numbers into
-   string dataFromFile;
-
-   fstream sortfile;
-   sortfile.open( "numbers-50k-random.txt", ios::in);
-
-   if(sortfile.is_open()){                  //check that we have valid file open
-     while(getline(sortfile,dataFromFile)){ //do stuff with the file's data if it is open
-
-     //SELECTION SORT
-        //Get starting timepoint for Selection Sort
-        auto startSS = high_resolution_clock::now();
-        // Call the SelectionSort function
-        SelectionSort(sortfile, sortfile.size());
-        //Get the ending timepoint for Selection Sort
-        auto stopSS = high_resolution_clock::now();
-        //Calculate the duration of Selection Sort
-        auto SSspeed = duration_cast<microseconds>(stopSS - startSS);
-
-     //INSERTION SORT
-        //Get starting timepoint for Insertion Sort
-        auto startIS = high_resolution_clock::now();
-        // Call the Insertion Sort function
-        InsertionSort(sortfile,  sortfile.size());
-        //Get the ending timepoint for Insertion Sort
-        auto stopIS = high_resolution_clock::now();
-        //Calculate the duration of Insertion Sort
-        auto ISspeed = duration_cast<microseconds> (stopIS - startIS);
-
-     //RADIX SORT
-        //Get starting timepoint for Radix Sort
-        auto startRS = high_resolution_clock::now();
-        // Call the RadixSort function
-        RadixSort(sortfile,  sortfile.size());
-        //Get the ending timepoint for Radix Sort
-        auto stopRS = high_resolution_clock::now();
-        //Calculate the duration of Radix Sort
-        auto RSspeed = duration_cast<microseconds> (stopRS - startRS);
-
-     }
-
-     sortfile.close();
-
-
-   }
-   return 0;
 }
