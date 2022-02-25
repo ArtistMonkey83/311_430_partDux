@@ -77,7 +77,7 @@ Carefully consider how you would implement the addThis() function. It needs to b
 #include "PrecondViolatedExcep.h"
 
 //Global Variable to pass into visit functions
-int accumulator= 0,
+int sum= 0,
     removeCount = 0;
 //user defined visit function to print item
 template< class ItemType>
@@ -90,9 +90,10 @@ void display(ItemType& data)
 template< class ItemType>
 void addThis(ItemType& data)
 {
+  //int sum;
   //cout << accumulator << "accumulator " <<endl;
   //cout << data << "data" << endl;
-  accumulator = accumulator +data;
+  sum = sum + data;
   //cout << accumulator << "total is " <<endl;
 }
 
@@ -116,7 +117,7 @@ int main()
   cin >> userInput;
 
 //Read in an unknown number of integers, from standard input, terminated by a zero value. Each integer should be inserted into your BST object.
-  while(userInput > 0)
+  while(userInput != 0)
   {
     cedar.add(userInput);
     cin >> userInput;
@@ -137,6 +138,7 @@ Number of nodes: 8
 Sum of node values = 360
 
 */
+
   cout << "Tree height = " << (cedar.getHeight() - 1) << endl;
   cout << "Number of nodes: " << cedar.getNumberOfNodes() << endl;
   cedar.preorderTraverse(display);
@@ -146,9 +148,9 @@ Sum of node values = 360
   cedar.postorderTraverse(display);
   cout << endl;
   cedar.inorderTraverse(addThis);
-  cout << "Sum of node values = " << accumulator << endl <<endl;
+  cout << "Sum of node values = " << sum << endl <<endl;
 
-  accumulator = 0;
+  sum = 0;
 
   //Read in an unknown number of integers from standard input, and each integer should be deleted from your BST object.
     if (userInput == 0)
@@ -180,9 +182,9 @@ Sum of node values = 360
     cedar.postorderTraverse(display);
     cout << endl;
     cedar.inorderTraverse(addThis);
-    cout << "Sum of node values = " << accumulator << endl<<endl;
+    cout << "Sum of node values = " << sum << endl<<endl;
 
-    accumulator = 0;
+    sum = 0;
 //Next, you need to double the value of each node in the BST object, display the message "Doubling tree node values …" and then, for the last time, the BST information displayed twice earlier.
 
 /*
@@ -211,7 +213,7 @@ Sum of node values = 320
     cedar.postorderTraverse(display);
     cout << endl;
     cedar.inorderTraverse(addThis);
-    cout << "Sum of node values = " << accumulator << endl << endl;
+    cout << "Sum of node values = " << sum << endl << endl;
 
 
    return 0;
