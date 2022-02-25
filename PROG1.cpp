@@ -68,31 +68,32 @@ int main() {
 
    ifstream sortfile;          //creating an input output object
    string dataFromFile;       // Create a string to read numbers into
-   vector<int> data;          //Create a vector to hold the converted values from dataFromFile string which holds characters NOT integers, we need integers!
+   //vector<int> data;          //Create a vector to hold the converted values from dataFromFile string which holds characters NOT integers, we need integers!
+   data = (int*)malloc()
    sortfile.open( "numbers-50k-random.txt", ios::in);   //linking the sortfile object to a file
 
    if(sortfile.is_open())                 //check that we have valid file open
-     while(getline(sortfile,dataFromFile)){ //do stuff with the file's data if it is open
-
+     //while(getline(sortfile,dataFromFile)) //do stuff with the file's data if it is open
+     while (sortfile >> dataFromFile){
      //read into a vector
-                          //data.push_back(dataFromFile);
 
      //pass the vector to sort function string is storing a character split data from file and tokenize the numbers
-     data.push_back(stoi(dataFromFile));
+     int temp = stoi(dataFromFile);
      //push the tokened values into the vector
-     //data.push_back(dataFromFile);
+     data.push_back(temp);
 
      //1. split the line into just tokens parse characters into integers and remove whitespace
      //string to integers stoi()
      //for each token converted to integer push into vector
+      sortfile.close();
     }
-     sortfile.close();
+
 
      //SELECTION SORT
         //Get starting timepoint for Selection Sort
         auto startSS = high_resolution_clock::now();
         // Call the SelectionSort function
-        SelectionSort((int)(size_t)&data, data.size()); //pass vector with the info here
+        SelectionSort(data[0], data.size()); //pass vector with the info here
         //Get the ending timepoint for Selection Sort
         auto stopSS = high_resolution_clock::now();
         //Calculate the duration of Selection Sort
@@ -102,7 +103,7 @@ int main() {
         //Get starting timepoint for Insertion Sort
         auto startIS = high_resolution_clock::now();
         // Call the Insertion Sort function
-        InsertionSort((int)(size_t)&data,  data.size());
+        InsertionSort(data[0],  data.size());
         //Get the ending timepoint for Insertion Sort
         auto stopIS = high_resolution_clock::now();
         //Calculate the duration of Insertion Sort
@@ -112,7 +113,7 @@ int main() {
         //Get starting timepoint for Radix Sort
         auto startRS = high_resolution_clock::now();
         // Call the RadixSort function
-        RadixSort((int)(size_t)&data,  data.size());
+        RadixSort(data[0],  data.size());
         //Get the ending timepoint for Radix Sort
         auto stopRS = high_resolution_clock::now();
         //Calculate the duration of Radix Sort
