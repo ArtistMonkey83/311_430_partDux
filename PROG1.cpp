@@ -69,21 +69,30 @@ int main() {
    ifstream sortfile;          //creating an input output object
    string dataFromFile;       // Create a string to read numbers into
    int data[50000];          //Create a vector to hold the converted values from dataFromFile string which holds characters NOT integers, we need integers!
-   int i =0,
-       temp;
+   int i =0;
 
-   sortfile.open( "numbers-50k-random.txt", ios::in);   //linking the sortfile object to a file
+
+////
+//// Ascending order file
+////
+
+cout << "Ascend! "<< endl;
+
+   sortfile.open( "numbers-50k-ascending.txt", ios::in);   //linking the sortfile object to a file
 
    if(sortfile.is_open()){
      //while(getline(sortfile,dataFromFile)) //do stuff with the file's data if it is open
+    // cout << "we opened! "<<endl;
      while (!sortfile.eof()){
      //read into a vector
      sortfile >> dataFromFile;
+      // cout << "we sorting! "<<endl;
      //pass the vector to sort function string is storing a character split data from file and tokenize the numbers
-     temp = stoi(dataFromFile);
-
+     int temp = stoi(dataFromFile);
+    //cout << "we converting! "<<endl;
      data[i]=temp;
      i++;
+       //cout << "we incrementing! "<<endl;
      //push the tokened values into the vector
      //data.push_back(temp);
 
@@ -93,38 +102,180 @@ int main() {
 
     }
    }                 //check that we have valid file open
-
+    //cout << "we gonna close! "<<endl;
     sortfile.close();
-
+//cout << "we closed! "<<endl;
      //SELECTION SORT
         //Get starting timepoint for Selection Sort
-        auto startSS = high_resolution_clock::now();
+         auto startSS = high_resolution_clock::now();
         // Call the SelectionSort function
         SelectionSort(data, i); //pass vector with the info here
         //Get the ending timepoint for Selection Sort
-        auto stopSS = high_resolution_clock::now();
+         auto stopSS = high_resolution_clock::now();
         //Calculate the duration of Selection Sort
-        auto SSspeed = duration_cast<microseconds>(stopSS - startSS);
+         auto SSspeed = duration_cast<nanoseconds>(stopSS - startSS);
 
+cout << "ss! "<< SSspeed.count() <<endl;
      //INSERTION SORT
         //Get starting timepoint for Insertion Sort
-        auto startIS = high_resolution_clock::now();
+         auto startIS = high_resolution_clock::now();
         // Call the Insertion Sort function
         InsertionSort(data, i);
         //Get the ending timepoint for Insertion Sort
-        auto stopIS = high_resolution_clock::now();
+         auto stopIS = high_resolution_clock::now();
         //Calculate the duration of Insertion Sort
-        auto ISspeed = duration_cast<microseconds> (stopIS - startIS);
-
+         auto ISspeed = duration_cast<nanoseconds> (stopIS - startIS);
+cout << "is! "<< ISspeed.count() <<endl;
      //RADIX SORT
         //Get starting timepoint for Radix Sort
-        auto startRS = high_resolution_clock::now();
+         auto startRS = high_resolution_clock::now();
         // Call the RadixSort function
         RadixSort(data, i);
         //Get the ending timepoint for Radix Sort
-        auto stopRS = high_resolution_clock::now();
+         auto stopRS = high_resolution_clock::now();
         //Calculate the duration of Radix Sort
-        auto RSspeed = duration_cast<microseconds> (stopRS - startRS);
+        auto RSspeed = duration_cast<nanoseconds> (stopRS - startRS);
+cout << "rs! "<< RSspeed.count() <<endl;
+
+
+
+
+////
+//// Random order file
+////
+  i=0;
+  cout << "Random! "<< endl;
+   sortfile.open( "numbers-50k-random.txt", ios::in);   //linking the sortfile object to a file
+
+   if(sortfile.is_open()){
+     //while(getline(sortfile,dataFromFile)) //do stuff with the file's data if it is open
+    // cout << "we opened! "<<endl;
+     while (!sortfile.eof()){
+     //read into a vector
+     sortfile >> dataFromFile;
+      // cout << "we sorting! "<<endl;
+     //pass the vector to sort function string is storing a character split data from file and tokenize the numbers
+     int temp = stoi(dataFromFile);
+    //cout << "we converting! "<<endl;
+     data[i]=temp;
+     i++;
+       //cout << "we incrementing! "<<endl;
+     //push the tokened values into the vector
+     //data.push_back(temp);
+
+     //1. split the line into just tokens parse characters into integers and remove whitespace
+     //string to integers stoi()
+     //for each token converted to integer push into vector
+
+    }
+   }                 //check that we have valid file open
+    //cout << "we gonna close! "<<endl;
+    sortfile.close();
+//cout << "we closed! "<<endl;
+     //SELECTION SORT
+        //Get starting timepoint for Selection Sort
+         startSS = high_resolution_clock::now();
+        // Call the SelectionSort function
+        SelectionSort(data, i); //pass vector with the info here
+        //Get the ending timepoint for Selection Sort
+         stopSS = high_resolution_clock::now();
+        //Calculate the duration of Selection Sort
+         SSspeed = duration_cast<nanoseconds>(stopSS - startSS);
+
+cout << "ss! "<< SSspeed.count() <<endl;
+     //INSERTION SORT
+        //Get starting timepoint for Insertion Sort
+         startIS = high_resolution_clock::now();
+        // Call the Insertion Sort function
+        InsertionSort(data, i);
+        //Get the ending timepoint for Insertion Sort
+         stopIS = high_resolution_clock::now();
+        //Calculate the duration of Insertion Sort
+         ISspeed = duration_cast<nanoseconds> (stopIS - startIS);
+cout << "is! "<< ISspeed.count() <<endl;
+     //RADIX SORT
+        //Get starting timepoint for Radix Sort
+         startRS = high_resolution_clock::now();
+        // Call the RadixSort function
+        RadixSort(data, i);
+        //Get the ending timepoint for Radix Sort
+         stopRS = high_resolution_clock::now();
+        //Calculate the duration of Radix Sort
+         RSspeed = duration_cast<nanoseconds> (stopRS - startRS);
+cout << "rs! "<< RSspeed.count() <<endl;
+
+
+
+////
+//// Descending order file
+////
+
+i =0;
+cout << "Descend! "<< endl;
+
+   sortfile.open( "numbers-50k-descending.txt", ios::in);   //linking the sortfile object to a file
+
+   if(sortfile.is_open()){
+     //while(getline(sortfile,dataFromFile)) //do stuff with the file's data if it is open
+    // cout << "we opened! "<<endl;
+     while (!sortfile.eof()){
+     //read into a vector
+     sortfile >> dataFromFile;
+      // cout << "we sorting! "<<endl;
+     //pass the vector to sort function string is storing a character split data from file and tokenize the numbers
+     int temp = stoi(dataFromFile);
+    //cout << "we converting! "<<endl;
+     data[i]=temp;
+     i++;
+       //cout << "we incrementing! "<<endl;
+     //push the tokened values into the vector
+     //data.push_back(temp);
+
+     //1. split the line into just tokens parse characters into integers and remove whitespace
+     //string to integers stoi()
+     //for each token converted to integer push into vector
+
+    }
+   }                 //check that we have valid file open
+    //cout << "we gonna close! "<<endl;
+    sortfile.close();
+//cout << "we closed! "<<endl;
+     //SELECTION SORT
+        //Get starting timepoint for Selection Sort
+         startSS = high_resolution_clock::now();
+        // Call the SelectionSort function
+        SelectionSort(data, i); //pass vector with the info here
+        //Get the ending timepoint for Selection Sort
+         stopSS = high_resolution_clock::now();
+        //Calculate the duration of Selection Sort
+         SSspeed = duration_cast<nanoseconds>(stopSS - startSS);
+
+cout << "ss! "<< SSspeed.count() <<endl;
+     //INSERTION SORT
+        //Get starting timepoint for Insertion Sort
+         startIS = high_resolution_clock::now();
+        // Call the Insertion Sort function
+        InsertionSort(data, i);
+        //Get the ending timepoint for Insertion Sort
+         stopIS = high_resolution_clock::now();
+        //Calculate the duration of Insertion Sort
+         ISspeed = duration_cast<nanoseconds> (stopIS - startIS);
+cout << "is! "<< ISspeed.count() <<endl;
+     //RADIX SORT
+        //Get starting timepoint for Radix Sort
+         startRS = high_resolution_clock::now();
+        // Call the RadixSort function
+        RadixSort(data, i);
+        //Get the ending timepoint for Radix Sort
+         stopRS = high_resolution_clock::now();
+        //Calculate the duration of Radix Sort
+         RSspeed = duration_cast<nanoseconds> (stopRS - startRS);
+cout << "rs! "<< RSspeed.count() <<endl;
+
+
+
+
+
 
    return 0;
 }
