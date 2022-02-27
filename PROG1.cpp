@@ -43,32 +43,34 @@ You can use the numeric datasets provided in this zyLab for your experiments or 
 using namespace std;
 using namespace std::chrono;
 
+//////////////////////////
+//////////////////////
+//////////////////
+//////////////            SORTING ALGORITHM FUNCTION PROTOTYPES
+//////////
+//////
+///
 
+void SelectionSort(int* numbers, int numbersSize);      // Selection Sort implementation source Zybooks 5.5 c++: Selection sort
+void InsertionSort(int* numbers, int numbersSize);      // Insertion Sort source Zybooks 5.3 c++: Insertion sort
 
+int RadixGetLength(int value);                          // RadixSort implementation source Zybooks 5.12 c++: Radix sort
+int RadixGetMaxLength(int* numbers, int numbersSize);   // Returns the maximum length, in number of digits, out of all array elements source Zybooks 5.12 c++: Radix sort
+void RadixSort(int* numbers, int numbersSize);          // Source Zybooks 5.12 c++: Radix sort
 
-//Function Prototypes
+//////////////////////////
+//////////////////////
+//////////////////
+//////////////            DRIVING FUNCTION FOR PROG1
+//////////
+//////
+///
 
-//Selection Sort implementation source Zybooks 5.5 c++: Selection sort
-void SelectionSort(int* numbers, int numbersSize);
-
-//insertion Sort source Zybooks 5.3 c++: Insertion sort
-void InsertionSort(int* numbers, int numbersSize);
-
-///RadixSort implementation source Zybooks 5.12 c++: Radix sort
-int RadixGetLength(int value);
-
-// Returns the maximum length, in number of digits, out of all array elements source Zybooks 5.12 c++: Radix sort
-int RadixGetMaxLength(int* numbers, int numbersSize);
-
-//source Zybooks 5.12 c++: Radix sort
-void RadixSort(int* numbers, int numbersSize);
-
-//Driving Function
 int main() {
 
    ifstream sortfile;          // Create an input output object
    string dataFromFile;        // Create a string to read numbers into
-   int data[1000000];          // An array capable of holding 1 million integers, required for C++ sorting algorithms
+   int dataArray[1000000];          // An array capable of holding 1 million integers, required for C++ sorting algorithms
    int i =0;                   // Accumulator for number of items in an array, must start at 0!
    int temp;                   // Holds converted to integer values from a string
    vector<int> dataVector;     // Vector to hold our data for use in the sort()
@@ -90,32 +92,31 @@ int main() {
        sortfile >> dataFromFile;                  // Read an element from the linked file in line 86 to a string
 
        temp = stoi(dataFromFile);                 // Convert the element read in line 92 to an integer and save it temporarily
-       data[i]=temp;                              // Store the converted element to our data array at index i
+       dataArray[i]=temp;                         // Store the converted element to our dataArray at index i
        dataVector.push_back(temp);                // Store the converted element to our dataVector, required to run sort()!
 
-       i++;                                       // Increment our index so we know how many elements are in our data array
+       i++;                                       // Increment our index so we know how many elements are in our dataArray
     }
    }
     sortfile.close();                             // When while loop is done processing our data from files we close the object
 
 ///////////SELECTION SORT
         auto startSS = high_resolution_clock::now();                    // Get starting timepoint for Selection Sort
-        SelectionSort(data, i);                                         // Passing data array and i which holds the number of elements contained
+        SelectionSort(dataArray, i);                                    // Passing dataArray and i which holds the number of elements contained
         auto stopSS = high_resolution_clock::now();                     // Get the ending timepoint for Selection Sort
         auto SSspeed = duration_cast<nanoseconds>(stopSS - startSS);    // Calculate the duration of Selection Sort
-
 //cout << "Random ss! "<< SSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
 
 //////////INSERTION SORT
         auto startIS = high_resolution_clock::now();                    // Get starting timepoint for Insertion Sort
-        InsertionSort(data, i);                                         // Passing data array and i which holds the number of elements contained
+        InsertionSort(dataArray, i);                                    // Passing data array and i which holds the number of elements contained
         auto stopIS = high_resolution_clock::now();                     // Get the ending timepoint for Insertion Sort
         auto ISspeed = duration_cast<nanoseconds> (stopIS - startIS);   // Calculate the duration of Insertion Sort
 //cout << "Random is! "<< ISspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
 
 //////////RADIX SORT
         auto startRS = high_resolution_clock::now();                    // Get starting timepoint for Radix Sort
-        RadixSort(data, i);                                             // Passing data array and i which holds the number of elements contained
+        RadixSort(dataArray, i);                                        // Passing data array and i which holds the number of elements contained
         auto stopRS = high_resolution_clock::now();                     // Get the ending timepoint for Radix Sort
         auto RSspeed = duration_cast<nanoseconds> (stopRS - startRS);   // Calculate the duration of Radix Sort
 //cout << "Random rs! "<< RSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
@@ -127,6 +128,7 @@ int main() {
         auto CSspeed = duration_cast<nanoseconds> (stopCS - startCS);   // Calculate the duration of C++ Sort
 //cout << "Random cs! "<< CSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
 
+        i = 0;           // Resetting our index variable to 0
 //////////////////////////
 //////////////////////
 //////////////////
@@ -135,183 +137,138 @@ int main() {
 //////
 ///
 
-   sortfile.open( "ascending order.txt", ios::in);   //linking the sortfile object to a file
+sortfile.open( "ascending order.txt", ios::in); // Linking the sortfile object to a file of integers
 
-   if(sortfile.is_open()){
+if(sortfile.is_open()){                        // If we correctly opened the above file then......
 
-     while (!sortfile.eof()){
+  while (!sortfile.eof()){                     // While we are not at the end of the linked file in line 141.....
 
-     sortfile >> dataFromFile;
+    sortfile >> dataFromFile;                  // Read an element from the linked file in line 141 to a string
 
-    temp = stoi(dataFromFile);
+    temp = stoi(dataFromFile);                 // Convert the element read in line 147 to an integer and save it temporarily
+    dataArray[i]=temp;                         // Store the converted element to our dataArray at index i
+    dataVector.push_back(temp);                // Store the converted element to our dataVector, required to run sort()!
 
-     data[i]=temp;
-     dataVector.push_back(temp);
-     i++;
+    i++;                                       // Increment our index so we know how many elements are in our dataArray
+ }
+}
+ sortfile.close();                             // When while loop is done processing our data from files we close the object
 
-    }
-   }
-    sortfile.close();
-
-     //SELECTION SORT
-        //Get starting timepoint for Selection Sort
-        startSS = high_resolution_clock::now();
-        // Call the SelectionSort function
-        SelectionSort(data, i); //pass vector with the info here
-        //Get the ending timepoint for Selection Sort
-        stopSS = high_resolution_clock::now();
-        //Calculate the duration of Selection Sort
-        SSspeed = duration_cast<nanoseconds>(stopSS - startSS);
-
-cout << "Ascending ss! "<< SSspeed.count() <<endl;
+///////////SELECTION SORT
+     startSS = high_resolution_clock::now();                    // Get starting timepoint for Selection Sort
+     SelectionSort(dataArray, i);                               // Passing dataArray and i which holds the number of elements contained
+     stopSS = high_resolution_clock::now();                     // Get the ending timepoint for Selection Sort
+     SSspeed = duration_cast<nanoseconds>(stopSS - startSS);    // Calculate the duration of Selection Sort
+//cout << "Random ss! "<< SSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
 
 //////////INSERTION SORT
-        //Get starting timepoint for Insertion Sort
-        startIS = high_resolution_clock::now();
-        // Call the Insertion Sort function
-        InsertionSort(data, i);
-        //Get the ending timepoint for Insertion Sort
-        stopIS = high_resolution_clock::now();
-        //Calculate the duration of Insertion Sort
-        ISspeed = duration_cast<nanoseconds> (stopIS - startIS);
-cout << "Ascending is! "<< ISspeed.count() <<endl;
+     startIS = high_resolution_clock::now();                    // Get starting timepoint for Insertion Sort
+     InsertionSort(dataArray, i);                               // Passing dataArray and i which holds the number of elements contained
+     stopIS = high_resolution_clock::now();                     // Get the ending timepoint for Insertion Sort
+     ISspeed = duration_cast<nanoseconds> (stopIS - startIS);   // Calculate the duration of Insertion Sort
+//cout << "Random is! "<< ISspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
 
 //////////RADIX SORT
-        //Get starting timepoint for Radix Sort
-        startRS = high_resolution_clock::now();
-        // Call the RadixSort function
-        RadixSort(data, i);
-        //Get the ending timepoint for Radix Sort
-        stopRS = high_resolution_clock::now();
-        //Calculate the duration of Radix Sort
-        RSspeed = duration_cast<nanoseconds> (stopRS - startRS);
-cout << "Ascending rs! "<< RSspeed.count() <<endl;
+     startRS = high_resolution_clock::now();                    // Get starting timepoint for Radix Sort
+     RadixSort(dataArray, i);                                   // Passing dataArray and i which holds the number of elements contained
+     stopRS = high_resolution_clock::now();                     // Get the ending timepoint for Radix Sort
+     RSspeed = duration_cast<nanoseconds> (stopRS - startRS);   // Calculate the duration of Radix Sort
+//cout << "Random rs! "<< RSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
 
 //////////C++ SORT
-        //Get starting timepoint for C++ Sort
-        startCS = high_resolution_clock::now();
-        // Call the C++ Sort function
-        sort(dataVector.begin(),dataVector.end());
-        //Get the ending timepoint for C++ Sort
-        stopCS = high_resolution_clock::now();
-        //Calculate the duration of C++ Sort
-        CSspeed = duration_cast<nanoseconds> (stopCS - startCS);
-        cout << "Ascending cs! "<< CSspeed.count() <<endl;
+     startCS = high_resolution_clock::now();                    // Get starting timepoint for C++ Sort
+     sort(dataVector.begin(),dataVector.end());                 // Passing the begining and end of our dataVector
+     stopCS = high_resolution_clock::now();                     // Get the ending timepoint for C++ Sort
+     CSspeed = duration_cast<nanoseconds> (stopCS - startCS);   // Calculate the duration of C++ Sort
+//cout << "Random cs! "<< CSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
 
+      i = 0;             // Resetting our index variable to 0
 //////////////////////////
 //////////////////////
 //////////////////
-//////////////
+//////////////            RANDOM ORDER TEXT FILE PROCESS
 //////////
 //////
 ///
-//Descending Text File
 
+sortfile.open( "random order.txt", ios::in);   // Linking the sortfile object to a file of integers
 
-   sortfile.open( "descending order.txt", ios::in);   //linking the sortfile object to a file
+if(sortfile.is_open()){                        // If we correctly opened the above file then......
 
-   if(sortfile.is_open()){
+  while (!sortfile.eof()){                     // While we are not at the end of the linked file in line 86.....
 
-     while (!sortfile.eof()){
+    sortfile >> dataFromFile;                  // Read an element from the linked file in line 194 to a string
 
-     sortfile >> dataFromFile;
+    temp = stoi(dataFromFile);                 // Convert the element read in line 200 to an integer and save it temporarily
+    dataArray[i]=temp;                              // Store the converted element to our data array at index i
+    dataVector.push_back(temp);                // Store the converted element to our dataVector, required to run sort()!
 
-    temp = stoi(dataFromFile);
+    i++;                                       // Increment our index so we know how many elements are in our data array
+  }
+}
+  sortfile.close();                             // When while loop is done processing our data from files we close the object
 
-     data[i]=temp;
-     dataVector.push_back(temp);
-     i++;
-
-    }
-   }
-    sortfile.close();
-
-     //SELECTION SORT
-        //Get starting timepoint for Selection Sort
-        startSS = high_resolution_clock::now();
-        // Call the SelectionSort function
-        SelectionSort(data, i); //pass vector with the info here
-        //Get the ending timepoint for Selection Sort
-        stopSS = high_resolution_clock::now();
-        //Calculate the duration of Selection Sort
-        SSspeed = duration_cast<nanoseconds>(stopSS - startSS);
-
-cout << "Descending ss! "<< SSspeed.count() <<endl;
+///////////SELECTION SORT
+      startSS = high_resolution_clock::now();                    // Get starting timepoint for Selection Sort
+      SelectionSort(dataArray, i);                               // Passing dataArray and i which holds the number of elements contained
+      stopSS = high_resolution_clock::now();                     // Get the ending timepoint for Selection Sort
+      SSspeed = duration_cast<nanoseconds>(stopSS - startSS);    // Calculate the duration of Selection Sort
+//cout << "Random ss! "<< SSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
 
 //////////INSERTION SORT
-        //Get starting timepoint for Insertion Sort
-        startIS = high_resolution_clock::now();
-        // Call the Insertion Sort function
-        InsertionSort(data, i);
-        //Get the ending timepoint for Insertion Sort
-        stopIS = high_resolution_clock::now();
-        //Calculate the duration of Insertion Sort
-        ISspeed = duration_cast<nanoseconds> (stopIS - startIS);
-cout << "Descending is! "<< ISspeed.count() <<endl;
+      startIS = high_resolution_clock::now();                    // Get starting timepoint for Insertion Sort
+      InsertionSort(dataArray, i);                               // Passing dataArray and i which holds the number of elements contained
+      stopIS = high_resolution_clock::now();                     // Get the ending timepoint for Insertion Sort
+      ISspeed = duration_cast<nanoseconds> (stopIS - startIS);   // Calculate the duration of Insertion Sort
+//cout << "Random is! "<< ISspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
 
 //////////RADIX SORT
-        //Get starting timepoint for Radix Sort
-        startRS = high_resolution_clock::now();
-        // Call the RadixSort function
-        RadixSort(data, i);
-        //Get the ending timepoint for Radix Sort
-        stopRS = high_resolution_clock::now();
-        //Calculate the duration of Radix Sort
-        RSspeed = duration_cast<nanoseconds> (stopRS - startRS);
-cout << "Descending rs! "<< RSspeed.count() <<endl;
+      startRS = high_resolution_clock::now();                    // Get starting timepoint for Radix Sort
+      RadixSort(dataArray, i);                                   // Passing dataArray and i which holds the number of elements contained
+      stopRS = high_resolution_clock::now();                     // Get the ending timepoint for Radix Sort
+      RSspeed = duration_cast<nanoseconds> (stopRS - startRS);   // Calculate the duration of Radix Sort
+//cout << "Random rs! "<< RSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
 
 //////////C++ SORT
-        //Get starting timepoint for C++ Sort
-        startCS = high_resolution_clock::now();
-        // Call the C++ Sort function
-        sort(dataVector.begin(),dataVector.end());
-        //Get the ending timepoint for C++ Sort
-        stopCS = high_resolution_clock::now();
-        //Calculate the duration of C++ Sort
-        CSspeed = duration_cast<nanoseconds> (stopCS - startCS);
-        cout << "Descending cs! "<< CSspeed.count() <<endl;
-
+      startCS = high_resolution_clock::now();                    // Get starting timepoint for C++ Sort
+      sort(dataVector.begin(),dataVector.end());                 // Passing the begining and end of our dataVector
+      stopCS = high_resolution_clock::now();                     // Get the ending timepoint for C++ Sort
+      CSspeed = duration_cast<nanoseconds> (stopCS - startCS);   // Calculate the duration of C++ Sort
+//cout << "Random cs! "<< CSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
+cout << "Number of integers in file" << i << endl;                      // Calculate how many values are in our list
    return 0;
 }
 
-
-
 ////////////
 ////////
-/////        THE SORTING ALGORITHMS USED
+/////        THE SORTING ALGORITHMS, SOURCE ZYBOOKS 2022
 ///
 //
 
-
 //Selection Sort implementation source Zybooks 5.5 c++: Selection sort
 void SelectionSort(int* numbers, int numbersSize) {
-   for (int i = 0; i < numbersSize - 1; i++) {
-      // Find index of smallest remaining element
-      int indexSmallest = i;
-      for (int j = i + 1; j < numbersSize; j++) {
-         if (numbers[j] < numbers[indexSmallest]) {
-            indexSmallest = j;
+   for (int i = 0; i < numbersSize - 1; i++) {        // For loop to iterate through all the elements in dataArray
+
+      int indexSmallest = i;                          // Find index of smallest remaining element in dataArray
+      for (int j = i + 1; j < numbersSize; j++) {     // Comparing the i+1 (next) element in dataArray with current smallest
+         if (numbers[j] < numbers[indexSmallest]) {   // If we find a number that is < current smallest
+            indexSmallest = j;                        // Update the value in our indexSmallest variable to properly reflect the smallest value
          }
       }
 
-      // Swap numbers[i] and numbers[indexSmallest]
-      int temp = numbers[i];
+      int temp = numbers[i];                          // Swap numbers[i] and numbers[indexSmallest]
       numbers[i] = numbers[indexSmallest];
       numbers[indexSmallest] = temp;
    }
 }
 
-////////////
-////////
-/////
-///
 //Insertion Sort source Zybooks 5.3 c++: Insertion sort
 void InsertionSort(int* numbers, int numbersSize) {
-   for (int i = 1; i < numbersSize; i++) {
-      int j = i;
-      while (j > 0 && numbers[j] < numbers[j - 1]) {
-         // Swap numbers[j] and numbers [j - 1]
-         int temp = numbers[j];
+   for (int i = 1; i < numbersSize; i++) {              // For loop to iterate through all the elements in dataArray
+      int j = i;                                        // Variable for holding the comparison index
+      while (j > 0 && numbers[j] < numbers[j - 1]) {    // While j is a valid dataArray index AND element at j is less then the one at previous index....
+
+         int temp = numbers[j];                         // Swap numbers[j] and numbers [j - 1]
          numbers[j] = numbers[j - 1];
          numbers[j - 1] = temp;
          j--;
@@ -319,98 +276,78 @@ void InsertionSort(int* numbers, int numbersSize) {
    }
 }
 
-////////////
-////////
-/////
-///
-///
-///RadixSort implementation source Zybooks 5.12 c++: Radix sort
-///
-int RadixGetLength(int value) {
-   if (value == 0) {
-      return 1;
-   }
+//RadixSort implementation source Zybooks 5.12 c++: Radix sort
+int RadixGetLength(int value) {             // This function finds the number of iterations Radix needs to perform to sort elements
+   if (value == 0) { return 1; }            // If the length of an element is 0 we don't have a valid element we are done!
 
-   int digits = 0;
-   while (value != 0) {
-      digits++;
-      value /= 10;
+   int digits = 0;                          // digits accumulates the number of places an element in dataArray has
+   while (value != 0) {                     // While we are accessing a valid element in dataArray......
+      digits++;                             // Increment digits to reflect the maximum place value of elements in dataArray
+      value /= 10;                          // We are using base ten values so we divide by 10!
    }
-   return digits;
+   return digits;                           // Return the maximum number of value places an element in dataArray contains
 }
 
-// Returns the maximum length, in number of digits, out of all array elements
-int RadixGetMaxLength(int* numbers, int numbersSize) {
-   int maxDigits = 0;
-   for (int i = 0; i < numbersSize; i++) {
-      int digitCount = RadixGetLength(numbers[i]);
-      if (digitCount > maxDigits) {
-         maxDigits = digitCount;
+int RadixGetMaxLength(int* numbers, int numbersSize) {  // Returns the maximum length, in number of digits, out of all dataArray elements
+   int maxDigits = 0;                                   // maxDigits holds the element found with the most value places
+   for (int i = 0; i < numbersSize; i++) {              // For loop to iterate through the entire dataArray
+      int digitCount = RadixGetLength(numbers[i]);      // Function call returns the value found in process starting on line 280
+      if (digitCount > maxDigits) {                     // If the next element in dataArray has more place values than previous digitCount.....
+         maxDigits = digitCount;                        // Update maxDigits to correctly reflect the maximum place values Radix will manage
       }
    }
-   return maxDigits;
+   return maxDigits;                                    // maxDigits holds the highest number of place values found in dataArray
 }
 
-void RadixSort(int* numbers, int numbersSize) {
-   vector<vector<int>*> buckets;
-   for (int i = 0; i < 10; i++) {
-      vector<int>* bucket = new vector<int>();
-      buckets.push_back(bucket);
+void RadixSort(int* numbers, int numbersSize) {   // RadixSort is a bucket sorting algorithm that using place values to determine
+   vector<vector<int>*> buckets;                  // Declaring the buckets for a base ten 0-9 RadixSort
+   for (int i = 0; i < 10; i++) {                 // For loop which will iterate through all ten buckets
+      vector<int>* bucket = new vector<int>();    // Creating a bucket to hold multiple values of the same assessed integer
+      buckets.push_back(bucket);                  // This allowes us to have multiple elements with the same assessed integer value in a group
    }
 
    int copyBackIndex = 0;
 
-   // Find the max length, in number of digits
-   int maxDigits = RadixGetMaxLength(numbers, numbersSize);
+   int maxDigits = RadixGetMaxLength(numbers, numbersSize);             // Find the max length, in number of digits
 
-   int pow10 = 1;
-   for (int digitIndex = 0; digitIndex < maxDigits; digitIndex++) {
-      // Put numbers into buckets
-      for (int i = 0; i < numbersSize; i++) {
-         int num = numbers[i];
-         int bucketIndex = (abs(num) / pow10) % 10;
-         buckets[bucketIndex]->push_back(num);
+   int pow10 = 1;                                                       // Start at the ones value place, this is a base ten RadixSort
+   for (int digitIndex = 0; digitIndex < maxDigits; digitIndex++) {     // For loop that iterates while our element is less than maxDigits
+      for (int i = 0; i < numbersSize; i++) {                           // For loop to put numbers into buckets
+         int num = numbers[i];                                          // num holds the current element being assessed
+         int bucketIndex = (abs(num) / pow10) % 10;                     // bucketIndex assigns the value of the particular place value we are assessing
+         buckets[bucketIndex]->push_back(num);                          // Push the current element being assessed into the proper bucket
       }
 
-      // Copy buckets back into numbers array
-      copyBackIndex = 0;
-      for (int i = 0; i < 10; i++) {
+      copyBackIndex = 0;                                                // Copy buckets back into numbers array
+      for (int i = 0; i < 10; i++) {                                    // This is base ten RadixSort so i ranges from 0-9
          vector<int>& bucket = *buckets[i];
-         for (int j = 0; j < bucket.size(); j++) {
-            numbers[copyBackIndex] = bucket[j];
-            copyBackIndex++;
+         for (int j = 0; j < bucket.size(); j++) {                      // Starting at 0 we copy the element back into the dataArray which is
+            numbers[copyBackIndex] = bucket[j];                         // Known as numbers locally in the RadixSort algorithm
+            copyBackIndex++;                                            // Increment the bucket index to move to next bucket to copy back
          }
          bucket.clear();
       }
 
-      pow10 *= 10;
+      pow10 *= 10;                                                      // Base 10, we will properly assess next place value with *=10
    }
 
-   vector<int> negatives;
-   vector<int> nonNegatives;
-   for (int i = 0; i < numbersSize; i++) {
-      int num = numbers[i];
-      if (num < 0) {
-         negatives.push_back(num);
-      }
-      else {
-         nonNegatives.push_back(num);
-      }
+   vector<int> negatives;                                               // RadixSort bucket sort doesn't differentiate between negative values
+   vector<int> nonNegatives;                                            // nonNegatives will contain non negative values for RadixSort to assess
+   for (int i = 0; i < numbersSize; i++) {                              // For loop that will iterate through dataArray, locally known as numbers
+      int num = numbers[i];                                             // Local variable to hold the value of an element in dataArray
+      if (num < 0) { negatives.push_back(num); }                        // If the element being assessed is negative..... Push that item into the appropriate vector negatives
+      else { nonNegatives.push_back(num); }                             // Otherwise the element being assessed is pushed into nonNegatives vector
    }
 
-   // Copy sorted content to array - negatives in reverse, then non-negatives
-   copyBackIndex = 0;
-   for (int i = negatives.size() - 1; i >= 0; i--) {
-      numbers[copyBackIndex] = negatives[i];
-      copyBackIndex++;
+   copyBackIndex = 0;                                                   // Copy sorted content to array - negatives in reverse, then non-negatives
+   for (int i = negatives.size() - 1; i >= 0; i--) {                    // For loop to iterate through the negatives values first
+      numbers[copyBackIndex] = negatives[i];                            // Assigning dataArray,locally known as numbers, with negative values first
+      copyBackIndex++;                                                  // Increament index to travers through all elements in dataArray/numbers
    }
-   for (int i = 0; i < nonNegatives.size(); i++) {
-      numbers[copyBackIndex] = nonNegatives[i];
-      copyBackIndex++;
+   for (int i = 0; i < nonNegatives.size(); i++) {                      // For loop to iterate through the non negative values next
+      numbers[copyBackIndex] = nonNegatives[i];                         // Assigning dataArray, locally known as numbers, with non negative values next
+      copyBackIndex++;                                                  // Increament index till we arrive at the end of nonNegatives vector
    }
 
-   // Free each dynamically allocated bucket
-   for (int i = 0; i < 10; i++) {
-      delete buckets[i];
-   }
+   for (int i = 0; i < 10; i++) { delete buckets[i]; }                  // Free each dynamically allocated bucket
 }
