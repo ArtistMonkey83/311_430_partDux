@@ -1,23 +1,18 @@
-/*
 
+/*
 15.1 PROG 1: What type of sorting algorithm is used by the built-in C++ template function?
 This lab will be available until May 31st, 11:59 PM PDT
 Overview
 The goal of this programming assignment is to confirm the efficiency of the sorting algorithm used by C++ in its built-in sort() template function that is included in the algorithm header of the C++ Standard Library. In order to do this, you will conduct a careful empirical study of the relative performance of sorting algorithms using three datasets (e.g. random, sorted in ascending order, sorted in descending order).
-
 Your work will include the following tasks:
-
 Implement two (2) fundamental and one (1) advanced sorting algorithm we discussed in class. You may use the code given in our zyBooks subscription to do this, or any other C++ implementation you find online, as long as you reference/acknowledge your source(s) in your code and in your report.
 Conduct experiments to compare the actual execution times of the sorting algorithms in comparison with the sort() template function. Use the chrono header file to determine the actual execution times.
 Plot the results of your experiments, showing the performance of all four(4) implementations on a single chart, and draw conclusions regarding the sort() template function and how it may be implemented.
 alt text
-
 There will be two (2) required deliverables for this programming assignment:
-
 your fully documented (with comments) C++ code you used to conduct your experiments, submitted through this zyLab; and
 a detailed report, in PDF, showing the results of your experiments, charts/plots showing the relative performance of the four (4) sorting algorithm implementations you are comparing, and any conclusions you made based on these results --- this report will be submitted through Gradescope.
 For full credit, your PDF report must, at the least, include the following:
-
 The title of your report (you can use the title of this PROG).
 Your name, our course prefix and number, and the date of your submission.
 Identify and briefly describe the features of the two (2) fundamental and the one (1) advanced sorting algorithm you selected for this experiment. Reference all sources for the implementations you are using.
@@ -25,11 +20,9 @@ Explain your experimental design (what type of data are you using; identify any 
 Present a chart showing a plot of the actual execution times for all four (4) implementations based on varying values for N.
 Provide your conclusions and support them with your results.
 For information on how to create charts, you may refer to the following:
-
 "Create a chart from start to finish," Microsoft Support pages.
 "How to create a graph in Google Sheets," J. Lloyd, WikiHow.
 You can use the numeric datasets provided in this zyLab for your experiments or generate and use your own.
-
 */
 
 #include <cstdlib>
@@ -105,28 +98,28 @@ int main() {
         SelectionSort(dataArray, i);                                    // Passing dataArray and i which holds the number of elements contained
         auto stopSS = high_resolution_clock::now();                     // Get the ending timepoint for Selection Sort
         auto SSspeed = duration_cast<nanoseconds>(stopSS - startSS);    // Calculate the duration of Selection Sort
-//cout << "Random ss! "<< SSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
+//cout << "Random ss! "<< SSspeed.count() <<endl;                         // Print to the screen the time elapsed in nanoseconds
 
 //////////INSERTION SORT
         auto startIS = high_resolution_clock::now();                    // Get starting timepoint for Insertion Sort
         InsertionSort(dataArray, i);                                    // Passing data array and i which holds the number of elements contained
         auto stopIS = high_resolution_clock::now();                     // Get the ending timepoint for Insertion Sort
         auto ISspeed = duration_cast<nanoseconds> (stopIS - startIS);   // Calculate the duration of Insertion Sort
-//cout << "Random is! "<< ISspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
+//cout << "Random is! "<< ISspeed.count() <<endl;                         // Print to the screen the time elapsed in nanoseconds
 
 //////////RADIX SORT
         auto startRS = high_resolution_clock::now();                    // Get starting timepoint for Radix Sort
         RadixSort(dataArray, i);                                        // Passing data array and i which holds the number of elements contained
         auto stopRS = high_resolution_clock::now();                     // Get the ending timepoint for Radix Sort
         auto RSspeed = duration_cast<nanoseconds> (stopRS - startRS);   // Calculate the duration of Radix Sort
-//cout << "Random rs! "<< RSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
+//cout << "Random rs! "<< RSspeed.count() <<endl;                         // Print to the screen the time elapsed in nanoseconds
 
 //////////C++ SORT
         auto startCS = high_resolution_clock::now();                    // Get starting timepoint for C++ Sort
-        sort(dataVector.begin(),dataVector.end());                      // Passing the begining and end of our dataVector
+        sort(dataVector.begin(),dataVector.end());                      // Passing the beginning and end of our dataVector
         auto stopCS = high_resolution_clock::now();                     // Get the ending timepoint for C++ Sort
         auto CSspeed = duration_cast<nanoseconds> (stopCS - startCS);   // Calculate the duration of C++ Sort
-//cout << "Random cs! "<< CSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
+//cout << "Random cs! "<< CSspeed.count() <<endl;                         // Print to the screen the time elapsed in nanoseconds
 
         i = 0;           // Resetting our index variable to 0
 //////////////////////////
@@ -159,39 +152,39 @@ if(sortfile.is_open()){                        // If we correctly opened the abo
      SelectionSort(dataArray, i);                               // Passing dataArray and i which holds the number of elements contained
      stopSS = high_resolution_clock::now();                     // Get the ending timepoint for Selection Sort
      SSspeed = duration_cast<nanoseconds>(stopSS - startSS);    // Calculate the duration of Selection Sort
-//cout << "Random ss! "<< SSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
+//cout << "Random ss! "<< SSspeed.count() <<endl;                         // Print to the screen the time elapsed in nanoseconds
 
 //////////INSERTION SORT
      startIS = high_resolution_clock::now();                    // Get starting timepoint for Insertion Sort
      InsertionSort(dataArray, i);                               // Passing dataArray and i which holds the number of elements contained
      stopIS = high_resolution_clock::now();                     // Get the ending timepoint for Insertion Sort
      ISspeed = duration_cast<nanoseconds> (stopIS - startIS);   // Calculate the duration of Insertion Sort
-//cout << "Random is! "<< ISspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
+//cout << "Random is! "<< ISspeed.count() <<endl;                         // Print to the screen the time elapsed in nanoseconds
 
 //////////RADIX SORT
      startRS = high_resolution_clock::now();                    // Get starting timepoint for Radix Sort
      RadixSort(dataArray, i);                                   // Passing dataArray and i which holds the number of elements contained
      stopRS = high_resolution_clock::now();                     // Get the ending timepoint for Radix Sort
      RSspeed = duration_cast<nanoseconds> (stopRS - startRS);   // Calculate the duration of Radix Sort
-//cout << "Random rs! "<< RSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
+//cout << "Random rs! "<< RSspeed.count() <<endl;                         // Print to the screen the time elapsed in nanoseconds
 
 //////////C++ SORT
      startCS = high_resolution_clock::now();                    // Get starting timepoint for C++ Sort
-     sort(dataVector.begin(),dataVector.end());                 // Passing the begining and end of our dataVector
+     sort(dataVector.begin(),dataVector.end());                 // Passing the beginning and end of our dataVector
      stopCS = high_resolution_clock::now();                     // Get the ending timepoint for C++ Sort
      CSspeed = duration_cast<nanoseconds> (stopCS - startCS);   // Calculate the duration of C++ Sort
-//cout << "Random cs! "<< CSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
+//cout << "Random cs! "<< CSspeed.count() <<endl;                         // Print to the screen the time elapsed in nanoseconds
 
       i = 0;             // Resetting our index variable to 0
 //////////////////////////
 //////////////////////
 //////////////////
-//////////////            RANDOM ORDER TEXT FILE PROCESS
+//////////////            DESCENDING ORDER TEXT FILE PROCESS
 //////////
 //////
 ///
 
-sortfile.open( "random order.txt", ios::in);   // Linking the sortfile object to a file of integers
+sortfile.open( "descending order.txt", ios::in);   // Linking the sortfile object to a file of integers
 
 if(sortfile.is_open()){                        // If we correctly opened the above file then......
 
@@ -213,29 +206,29 @@ if(sortfile.is_open()){                        // If we correctly opened the abo
       SelectionSort(dataArray, i);                               // Passing dataArray and i which holds the number of elements contained
       stopSS = high_resolution_clock::now();                     // Get the ending timepoint for Selection Sort
       SSspeed = duration_cast<nanoseconds>(stopSS - startSS);    // Calculate the duration of Selection Sort
-//cout << "Random ss! "<< SSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
+//cout << "Random ss! "<< SSspeed.count() <<endl;                         // Print to the screen the time elapsed in nanoseconds
 
 //////////INSERTION SORT
       startIS = high_resolution_clock::now();                    // Get starting timepoint for Insertion Sort
       InsertionSort(dataArray, i);                               // Passing dataArray and i which holds the number of elements contained
       stopIS = high_resolution_clock::now();                     // Get the ending timepoint for Insertion Sort
       ISspeed = duration_cast<nanoseconds> (stopIS - startIS);   // Calculate the duration of Insertion Sort
-//cout << "Random is! "<< ISspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
+//cout << "Random is! "<< ISspeed.count() <<endl;                         // Print to the screen the time elapsed in nanoseconds
 
 //////////RADIX SORT
       startRS = high_resolution_clock::now();                    // Get starting timepoint for Radix Sort
       RadixSort(dataArray, i);                                   // Passing dataArray and i which holds the number of elements contained
       stopRS = high_resolution_clock::now();                     // Get the ending timepoint for Radix Sort
       RSspeed = duration_cast<nanoseconds> (stopRS - startRS);   // Calculate the duration of Radix Sort
-//cout << "Random rs! "<< RSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
+//cout << "Random rs! "<< RSspeed.count() <<endl;                         // Print to the screen the time elapsed in nanoseconds
 
 //////////C++ SORT
       startCS = high_resolution_clock::now();                    // Get starting timepoint for C++ Sort
-      sort(dataVector.begin(),dataVector.end());                 // Passing the begining and end of our dataVector
+      sort(dataVector.begin(),dataVector.end());                 // Passing the beginning and end of our dataVector
       stopCS = high_resolution_clock::now();                     // Get the ending timepoint for C++ Sort
       CSspeed = duration_cast<nanoseconds> (stopCS - startCS);   // Calculate the duration of C++ Sort
-//cout << "Random cs! "<< CSspeed.count() <<endl;                         // Print to the screen the time elasped in nanoseconds
-cout << "Number of integers in file" << i << endl;                      // Calculate how many values are in our list
+//cout << "Random cs! "<< CSspeed.count() <<endl;                         // Print to the screen the time elapsed in nanoseconds
+//cout << "Number of integers in file" << i << endl;                      // Calculate how many values are in our list
    return 0;
 }
 
@@ -303,7 +296,7 @@ void RadixSort(int* numbers, int numbersSize) {   // RadixSort is a bucket sorti
    vector<vector<int>*> buckets;                  // Declaring the buckets for a base ten 0-9 RadixSort
    for (int i = 0; i < 10; i++) {                 // For loop which will iterate through all ten buckets
       vector<int>* bucket = new vector<int>();    // Creating a bucket to hold multiple values of the same assessed integer
-      buckets.push_back(bucket);                  // This allowes us to have multiple elements with the same assessed integer value in a group
+      buckets.push_back(bucket);                  // This allows us to have multiple elements with the same assessed integer value in a group
    }
 
    int copyBackIndex = 0;
@@ -341,12 +334,12 @@ void RadixSort(int* numbers, int numbersSize) {   // RadixSort is a bucket sorti
 
    copyBackIndex = 0;                                                   // Copy sorted content to array - negatives in reverse, then non-negatives
    for (int i = negatives.size() - 1; i >= 0; i--) {                    // For loop to iterate through the negatives values first
-      numbers[copyBackIndex] = negatives[i];                            // Assigning dataArray,locally known as numbers, with negative values first
-      copyBackIndex++;                                                  // Increament index to travers through all elements in dataArray/numbers
+      numbers[copyBackIndex] = negatives[i];                            // Assigning dataArray, locally known as numbers, with negative values first
+      copyBackIndex++;                                                  // Increment index to travers through all elements in dataArray/numbers
    }
    for (int i = 0; i < nonNegatives.size(); i++) {                      // For loop to iterate through the non negative values next
       numbers[copyBackIndex] = nonNegatives[i];                         // Assigning dataArray, locally known as numbers, with non negative values next
-      copyBackIndex++;                                                  // Increament index till we arrive at the end of nonNegatives vector
+      copyBackIndex++;                                                  // Increment index till we arrive at the end of nonNegatives vector
    }
 
    for (int i = 0; i < 10; i++) { delete buckets[i]; }                  // Free each dynamically allocated bucket
