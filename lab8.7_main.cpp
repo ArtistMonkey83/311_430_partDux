@@ -81,8 +81,8 @@ void show(set <int> dataFromMain){
 
 // Displays the contents of a set object in descending order using a reverse iterator
 void showReverse(set <int> dataFromMain){
-  for(auto&  element : dataFromMain){
-    cout << " " << element;
+  for( auto i = dataFromMain.rbegin(); i != dataFromMain.rend(); i++){
+    cout << " " << *i;
   }
   cout << endl;
 }
