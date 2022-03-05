@@ -72,7 +72,7 @@ ostream& operator<< (ostream &os, const set<T>& setData) //os become buffer wher
   for(auto setElement : setData){
     os << setElement << ",";
   }
-  os << endl;
+  //os << endl;
 
   return os; //os is a buffer that needs the data returned so the driver can do stuff with it
 }
@@ -87,9 +87,10 @@ ostream& operator<< (ostream &os,const set<tuple <T,S>>& data) //ostream is for 
   }*/
   //only one for loop and get<0>(name of tuple)
   for(auto setElement : data){
-    os << get<0>(setElement) << ","<< get<1>(setElement); //data is a set and setElement is an element in the set which is a tuple
+    
+    os << "(" << get<0>(setElement) << ","<< get<1>(setElement)<< "),"; //data is a set and setElement is an element in the set which is a tuple
   }
-  os << endl;
+  //os << endl;
 
   return os; //os is a buffer that needs the data returned so the driver can do stuff with it
 }
@@ -120,8 +121,8 @@ for(int i = 0; i<word.size();i++)
   cout << "Given: A={" << setA << "}" << endl;
   cout << "       B={" << setB <<"}" << endl;
 
-  cout << "Then AxB ={" << cartesianProduct(setA,setB) << "}" << endl;
-  cout << "     BxA ={" << cartesianProduct(setB,setA) << "}" << endl;
+  cout << "Then AxB={" << cartesianProduct(setA,setB) << "}" << endl;
+  cout << "     BxA={" << cartesianProduct(setB,setA) << "}" << endl;
 
   return 0;
 }
