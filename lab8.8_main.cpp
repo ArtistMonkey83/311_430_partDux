@@ -38,10 +38,11 @@ Then AxB={(alpha,1),(alpha,2),(alpha,3),(bravo,1),(bravo,2),(bravo,3)} second ov
 #include <string>
 #include <iterator>
 #include <iostream>
-
+#include <vector>
+#include "string_tools.h"
 using namespace std;
 
-typedef tuple<typename T, typename S> tupleSet
+
 
 /////
 ////  FUNCTION DECLARATIONS
@@ -49,36 +50,48 @@ typedef tuple<typename T, typename S> tupleSet
 
 //Template function to implement a Cartesian product, we will overload the << operator to properly display
 template <typename T, typename S>
-void cartesianProduct(const set<T> stringData, const set<S> numberData)
+set<tuple <T,S>> cartesianProduct(const set<T> stringData, const set<S> numberData)
 {
+  //create my set of tuples
+  set<tuple<T,S>> product;
   for (auto stringElement : stringData){
     for ( auto numberElement : numberData){
-      tupleSet cartTuple =  make_tuple( stringElement, numberData);
+      auto cartTuple =  make_tuple( stringElement, numberElement);
+      //inserting to set
+      product.insert(cartTuple);
     }
   }
 
-
+  return product;//set
 }
 
 ///template class operator overloading for displaying one set of data
 template<typename T>
-iostream operator<< (const set<typename T> setData)
+ostream& operator<< (ostream &os, const set<T>& setData) //os become buffer where we push in the characters
 {
-  for(auto setElement : setdata){
-    cout << setElement << ",";
+  for(auto setElement : setData){
+    os << setElement << ",";
   }
-  cout << endl;
+  os << endl;
+
+  return os; //os is a buffer that needs the data returned so the driver can do stuff with it
 }
 //template class operator second overloaded << operator for displaying a tuple of sets
-template<typename T>
-iostream operator<<(const set<typename T> stringData, const set<typename S> numberData)
+template<typename T, typename S>
+ostream& operator<< (ostream &os,const set<tuple <T,S>>& data) //ostream is for out put only
 {
-  for (auto stringElement : stringData){
+  /*for (auto stringElement : stringData){
     for (auto numberElement : numberData){
       cout << " (" << stringElement << "," << stringData << "),"
     }
+  }*/
+  //only one for loop and get<0>(name of tuple)
+  for(auto setElement : data){
+    os << get<0>(setElement) << ","<< get<1>(setElement); //data is a set and setElement is an element in the set which is a tuple
   }
-  cout << endl;
+  os << endl;
+
+  return os; //os is a buffer that needs the data returned so the driver can do stuff with it
 }
 /////
 ////  DRIVING PROGRAM
@@ -88,16 +101,24 @@ int main(){
 
   string userInputT;
   int userInputS;
+  set <string> setA;
+  set <int> setB;
 
-  while (getline(cin,userInputT)){
-    set <string> setA;
-    setA.insert(userInputT);
-    cin >> userInputS;
-    set <int> setB;
-    setB.insert(userInputS);
-  }
-  cout << "Given: A={" << *setA << "}" << endl;
-  cout << "       B={" << *setB <<"}" << endl;
+//getline is only for strings and cin for integers
+getline(cin,userInputT);
+
+vector<string> word = split(userInputT, ' ');
+  //while (getline(cin,userInputT)){
+for(int i = 0; i<word.size();i++)
+    setA.insert(word.at(i));
+
+    while(cin >> userInputS){
+      setB.insert(userInputS);
+    }
+
+
+  cout << "Given: A={" << setA << "}" << endl;
+  cout << "       B={" << setB <<"}" << endl;
 
   cout << "Then AxB ={" << cartesianProduct(setA,setB) << "}" << endl;
   cout << "     BxA ={" << cartesianProduct(setB,setA) << "}" << endl;
