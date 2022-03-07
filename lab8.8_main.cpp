@@ -68,29 +68,37 @@ set<tuple <T,S>> cartesianProduct(const set<T> stringData, const set<S> numberDa
 ///template class operator overloading for displaying one set of data
 template<typename T>
 ostream& operator<< (ostream &os, const set<T>& setData) //os become buffer where we push in the characters
-{
+{ int counter=0;
   for(auto setElement : setData){
-    os << setElement << ",";
+    if(counter == setData.size()-1){
+      os << setElement;
+    }
+    else{
+      os << setElement << ",";
+    }
+    counter++;
   }
-  //os << endl;
+
 
   return os; //os is a buffer that needs the data returned so the driver can do stuff with it
 }
 //template class operator second overloaded << operator for displaying a tuple of sets
 template<typename T, typename S>
-ostream& operator<< (ostream &os,const set<tuple <T,S>>& data) //ostream is for out put only
+ostream& operator<< (ostream &os,const tuple <T,S>& data) //ostream is for out put only
 {
-  /*for (auto stringElement : stringData){
-    for (auto numberElement : numberData){
-      cout << " (" << stringElement << "," << stringData << "),"
-    }
-  }*/
+  int counter=0;
   //only one for loop and get<0>(name of tuple)
   for(auto setElement : data){
-    
-    os << "(" << get<0>(setElement) << ","<< get<1>(setElement)<< "),"; //data is a set and setElement is an element in the set which is a tuple
+    if (counter == data.size()-1) {
+      os << "(" << get<0>(setElement) << ","<< get<1>(setElement)<< ")";
+    } //data is a set and setElement is an element in the set which is a tuple
+
+    else{
+      os << "(" << get<0>(setElement) << ","<< get<1>(setElement)<< "),";
+    }
+    counter++;
   }
-  //os << endl;
+
 
   return os; //os is a buffer that needs the data returned so the driver can do stuff with it
 }
@@ -104,12 +112,13 @@ int main(){
   int userInputS;
   set <string> setA;
   set <int> setB;
+  //tuple<typename T> pairedData;
 
 //getline is only for strings and cin for integers
 getline(cin,userInputT);
 
 vector<string> word = split(userInputT, ' ');
-  //while (getline(cin,userInputT)){
+
 for(int i = 0; i<word.size();i++)
     setA.insert(word.at(i));
 
