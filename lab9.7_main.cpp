@@ -89,9 +89,9 @@ using namespace std;
 int main (){
 
   string word;                        //word holds the input from cin
-  int number;                         //no idea what this does..accumulate maybe.. its a number
+  //int number;                         //no idea what this does..accumulate maybe.. its a number
   map<string, unsigned> dictionary;                     //This only holds a unique string and is a LIST OF FREQUENCIES
-  multimap<unsigned,string> wordCount;     //This holds multiple strings, not unique, key represents the number of occurrences this is the OUTPUT
+  multimap<unsigned,string,greater<int>> wordCount;     //This holds multiple strings, not unique, key represents the number of occurrences this is the OUTPUT
 
   while (cin >> word){          //While we have standard input save it to word
 
@@ -111,7 +111,20 @@ int main (){
 
 
   cout << "Word Frequencies Report" << endl;                  //Print the title of the output
-  for(auto it = wordCount.begin(); it != wordCount.end(); it++){ //Iterate through dictionary to print word? or do we iterate through wordCount and print occurrences and words?
+  for(auto it = wordCount.rbegin(); it != wordCount.rend(); it++){ //Iterate through dictionary to print word? or do we iterate through wordCount and print occurrences and words?
+
+    if (it->first == next(it)->first){     //while the current element's occurence count is equal to the next elements occurence count, print alphabetically
+      while (it->second > next(it)->second){    //condition checking what comes first in alphabetic order
+
+        cout  << next(it)->first << " " << next(it)->second << endl;
+        it= next(it);
+
+        if (it->second < next(it)->second){
+        cout << it->first << " " << it->second<< endl;
+        }
+      }
+    }
+    else
     cout << it->first << " " << it->second << endl;           //Print the first element in wordCount which is the number of occurences, and the second which is the word
   }
 
