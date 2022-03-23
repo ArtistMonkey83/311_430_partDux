@@ -1,0 +1,18 @@
+S
+F Barber
+A Alice,Barber,3,14,1993
+A Janice,Adams,9,3,2001
+S
+F Barber
+F Martinez
+D Martinez
+D Smith
+S
+A John,Carter,5,30,2001
+A Martin,Smith,3,21,1991
+A Sam,Carter,10,11,1997
+S
+D Carter
+D Carter,Kelly
+R Butler
+S
