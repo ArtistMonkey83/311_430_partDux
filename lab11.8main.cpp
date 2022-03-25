@@ -31,7 +31,8 @@ Note: The C++ <algorithm> library includes a collection of functions that have t
 */
 #include <iostream>
 #include <vector>
-//#include <conio.h>
+#include <string>
+
 using namespace std;
 
 int INDEX = -1;
@@ -39,7 +40,7 @@ int INDEX = -1;
 bool isMinHeap(const vector<int> input){
   bool conclusion = false;      //Variable used to determine if the vector passed is a min heap
 
-  for(int i = input.front(); i < input.back(); i++){  //For loop to iterate through all the elements in the vector passed from main till we find a parent greater than a child.
+  for(int i = input.begin(); i = <int>input.end()-2; i++){  //For loop to iterate through all the elements in the vector passed from main till we find a parent greater than a child.
     if(input.at(i) > input.at(2*i+1)){
       INDEX = 2*i+1;
     }
@@ -47,7 +48,7 @@ bool isMinHeap(const vector<int> input){
       INDEX = 2*i+2;
     }
     else{
-      if(input.at(i)==input.back() && INDEX == -1){     //This line is executed if we traverse the enire vector without finding a parent greater than both its children.
+      if(input.at(i) == input.back() && INDEX == -1){     //This line is executed if we traverse the enire vector without finding a parent greater than both its children.
 
         conclusion = true;
 
@@ -59,16 +60,17 @@ bool isMinHeap(const vector<int> input){
 
 int main(){
   vector<int> data;                 //Data vector will hold our data from standard input
-  int value;                        //Value will hold the data as it is entered and then push_back into data vector
-
+  string value;                        //Value will hold the data as it is entered and then push_back into data vector
+  int number;
   while (getline(cin, value)){      //Get one line at a time from standard input
-    data.push_back(value);            //Push back the values into the vector
+    number = stoul(value);
+    data.push_back(number);            //Push back the values into the vector
 
     if(isMinHeap(data)){                //Determine if the vector we just created is a min Heap
       cout << "Vector is a min-heap." << endl;
     }
     else
-    if(INDEX!= -1 && isMinHeap(data) == false){
+    if(INDEX != -1 && isMinHeap(data) == false){
       cout << "Min-heap order property violated at index " << INDEX << "." << endl;
     }
   }
