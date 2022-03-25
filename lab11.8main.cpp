@@ -39,8 +39,8 @@ int INDEX = -1;
 
 bool isMinHeap(const vector<int> input){
   bool conclusion = false;      //Variable used to determine if the vector passed is a min heap
-
-  for(int i = input.begin(); i = <int>input.end()-2; i++){  //For loop to iterate through all the elements in the vector passed from main till we find a parent greater than a child.
+  int i = 0;
+  for(auto itr = input.begin(); itr < input.end()-2; itr++){  //For loop to iterate through all the elements in the vector passed from main till we find a parent greater than a child.
     if(input.at(i) > input.at(2*i+1)){
       INDEX = 2*i+1;
     }
@@ -54,6 +54,7 @@ bool isMinHeap(const vector<int> input){
 
       }
     }
+    i++;
   }
   return conclusion;
 }
