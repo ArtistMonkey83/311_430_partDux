@@ -13,25 +13,25 @@ class Contact {
     string firstName,
            lastName;
 
-    int    birthMonth,
-           birthDay,
-           birthYear;
+    unsigned birthMonth,
+             birthDay,
+             birthYear;
   public:
-    string getFirstName(& const ),   //getters
-           getLastName(& const);
+    Contact(string fn, string ln,unsigned bm,unsigned bd,unsigned by);  //Constructor
+    string getFirstName();   //getters
+    string getLastName();
 
 
-    int    getBirthMonth(& const ), //getters
-           getBirthDay(& const),
-           getBirthYear(& const);
+    unsigned getBirthMonth(); //getters non negative
+    unsigned getBirthDay();
+    unsigned getBirthYear();
 
-    void   setFirstName(string firstName),   //setters
-           setLastName(string lastName),
-           setBirthMonth(int birthMonth), //setters
-           setBirthDay(int birthDay),
-           setBirthYear(int getBirthYear);
+    void setFirstName(string firstName);   //setters
+    void setLastName(string lastName);
+    void setBirthMonth(unsigned birthMonth); //setters
+    void setBirthDay(unsigned birthDay);
+    void setBirthYear(unsigned getBirthYear);
 
-//Am I supposed to define the command operations here?
 
 };
 

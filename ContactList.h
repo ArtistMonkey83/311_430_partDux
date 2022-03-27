@@ -10,22 +10,26 @@
 #define CONTACT_LIST
 
 #include <set>
+#include "NotFoundException.h"
+
 using namespace std;
 
-#include "NotFoundException.h"
 
 //<Contact,string>
 class ContactList: public Database <Contact,string>
 {
+private:
+   vector<Contact> blackbookData;//vector of contacts
+   multimap <string,int> guidebook; //multimap (index) string and unsigned look up accomplished with mutlimap
 public:
 
     /** Tests whether this database is empty.
         @return True if the database is empty, or false if not. */
-     bool isEmpty();
+     bool isEmpty() const;
 
     /** Determines the number of entries (records) in the database.
         @return The number of entries/records in the database. */
-     unsigned getSize();
+     unsigned getSize() const;
 
     /** Adds a new record into the database.
         @param newData  The new record to add to the database.
@@ -59,14 +63,14 @@ public:
         @return  The set containing the entry (or entries) in the database
             that matches the given search key.
         @throw  NotFoundException if the given entry is not in the database. */
-     set<string> getEntry( const string& aKey ) const
+     set<Contact> getEntry( const string& aKey ) const
         throw(NotFoundException);
 
     /** Tests if an entry matching the given key occurs in this database.
         @post  The database is unchanged.
         @param aKey  The search key of the entry to find.
         @return  True if the entry occurs in the database, or false if not. */
-     bool contains( const string& aKey );
+     bool contains( const string& aKey ) const;
 
     /** Destroys object and frees memory allocated by object. */
      ~Contact() {  }
