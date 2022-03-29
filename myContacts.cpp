@@ -59,6 +59,8 @@ if(listOfContacts.is_open()){    //Returns true if there is a stream object (con
                                     */
                     for(int it = 1; it < stringFromFile.size(); it++)    //Starting at elemnt[1] till the last element in the string...
                     blackbook.add(stringFromFile[it]);       //Add the elements [1]-[4] by dereferencing an iterator (pointer) of the stringFromFile variable.
+                    cout << "New contact added "<< endl << "  " << stringFromFile[2] << " " << stringFromFile[1] << ", " << stringFromFile[3] << "/" << stringFromFile[4] << stringFromFile[5] << endl;
+                    //or do I cout << getEntry(it)?
                     break;
 
         case d:                   /*
@@ -75,7 +77,7 @@ if(listOfContacts.is_open()){    //Returns true if there is a stream object (con
                                       F Smith
                                   */
                     for(int it = 1; it < stringFromFile.size(); it++)    //Starting at elemnt[1] till the last element in the string...
-                    blackbook.contains(it)       //Add the elements [1]-[4] by dereferencing an iterator (pointer) of the stringFromFile variable.
+                    blackbook.getEntry(it)       //get the elements [1]-[4] by dereferencing an iterator (pointer) of the stringFromFile variable.
                     break;
 
         case r:                   /*
@@ -83,7 +85,7 @@ if(listOfContacts.is_open()){    //Returns true if there is a stream object (con
                                       R Wright
                                   */
                    for(int it = 1; it < stringFromFile.size(); it++)    //Starting at elemnt[0] till the last element in the string...
-                   blackbook.add(it)       //Add the elements [1]-[4] by dereferencing an iterator (pointer) of the stringFromFile variable.
+                   blackbook.removeAll(it)       //Add the elements [1]-[4] by dereferencing an iterator (pointer) of the stringFromFile variable.
                    break;
 
         case s:                   /*
