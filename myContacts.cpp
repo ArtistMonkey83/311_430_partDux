@@ -2,6 +2,7 @@
 #include <fstream>
 #include <map>
 #include <vector>
+#include <set>
 #include "ContactList.h"
 #include "Conact.h"
 
@@ -11,8 +12,10 @@ int main() {
 string userInput; //Variable to hold from standard in the name of the file a user wants to process
 vector <vector<string>> stringFromFile;   //Holds the value of a getline() from a linked file
 
+int counter = 0;        //Variable to hold the number of contacts loaded into a contact list object
 char caseID;            //string to hold a line from file containing the operation to be performed on a contact list
 string command;           //String variable that will hold just the command (element[0]) part of the string.
+set<contact> foundData;   //Object to hold found contacts
 ifstream listOfContacts,  //Stream class object to link contact list files to read from
          listOfCommands;  //Stream class object to link command list files to read from
 Contactlist blackbook;
@@ -32,13 +35,14 @@ if(listOfContacts.is_open()){    //Returns true if there is a stream object (con
     Contact newContact = stringFromFile;                    //Populating Conact object with data from standard input that is saved to stringFromFile
     blackbook.insert(newContact)//Inserting the newContact to our contactList object blackbook
     blackbook.guidebook(stringFromFile[0]);   //Adding the lastName to the multimap associated with our contactList object blackbook
-
+    counter++;    //Increamenting the counter for tracking how many contacts are in the contact list container
 
   } //After this while loop ends we have successfully pushed back all contacts one line at a time, each contact contains five data elements for one contact
 
+  cout << "Loaded " << counter << " records into the contact list." << endl;
   //save to contacts.out
   ofstream contactsOut;  //stream class object to write to file
-  contactsOut.open(userInput.out); //look up string functions for changing file extensions
+  contactsOut.open(userInput + ".out"); //This will append the .out extension, will be able to find the orginal input file as its extension will be included
   countactsOut << stringFromFile;
 
   cout << "Enter a command file with extension for performing work on the file of contacts: ";
@@ -59,8 +63,9 @@ if(listOfContacts.is_open()){    //Returns true if there is a stream object (con
                                     */
                     for(int it = 1; it < stringFromFile.size(); it++)    //Starting at elemnt[1] till the last element in the string...
                     blackbook.add(stringFromFile[it]);       //Add the elements [1]-[4] by dereferencing an iterator (pointer) of the stringFromFile variable.
-                    cout << "New contact added "<< endl << "  " << stringFromFile[2] << " " << stringFromFile[1] << ", " << stringFromFile[3] << "/" << stringFromFile[4] << stringFromFile[5] << endl;
+                    cout << "New contact added "<< endl << "  " << stringFromFile[1] << " " << stringFromFile[2] << ", " << stringFromFile[3] << "/" << stringFromFile[4] <<  stringFromFile[5] << endl;
                     //or do I cout << getEntry(it)?
+                    stringFromFile.clear(); //Reset our vector after processing the line
                     break;
 
         case d:                   /*
@@ -70,22 +75,55 @@ if(listOfContacts.is_open()){    //Returns true if there is a stream object (con
                                   */
                     for(int it =1; it < stringFromFile.size(); it++)    //Starting at elemnt[1] till the last element in the string...
                     blackbook.remove(it)       //Remove the elements [1]-[4] by dereferencing an iterator (pointer) of the stringFromFile variable.
+                    if(blackbook.remove(it)==true){ //this if statement is executed if we find only one contact with the last name provided by the user
+                      cout << "Delete " << "\"" << stringFromFile[2] << "\""<< endl;
+                      cout << "  " << stringFromFile[1] << " " << stringFromFile[2] << ", " << stringFromFile[3] << "/" << stringFromFile[4] << "/" << stringFromFile[5] << endl;
+                      cout << "Done." << endl;
+                    }
+
+                    if(blackbook.remove(it)==false){    //this if statement is executed if we find more then one contact with the last name provided by the user
+                      foundData.insert( blackbook.getEntry(stringFromFile[2]));   //Set that holds a subset of our contact list that match the last name currently in stringFromFile[1]
+                      cout << "Delete " << "\"" << stringFromFile[2] << "\""<< endl;
+                      cout << "Multiple matches for \"" << stringFromFile[2] << "\""<< endl;
+                      for(int i = 0; i < foundData.size(); i++){  //We need to iterate through our set to print out all the entries we found that match the current last name in stringFromFile[1]
+                        cout << " " << foundData[i].getFirstName() << " " << foundData[i].getLastName() << ", " << foundData[i].getBirthMonth() << "/" << foundData[i].getBirthDay() << "/" << foundData[i].getBirthYear() << endl;
+
+                      }
+                      cout << " Not done." << endl;
+                    }
+                    stringFromFile.clear(); //Reset our vector after processing the line
                     break;
 
         case f:                   /*
                                   F key : Find the record(s) from the contact list with a key value (last name) indicated by key. Display the record(s) that match the given key; otherwise, display an error message if no record(s) match the given key. Example:
                                       F Smith
                                   */
-                    for(int it = 1; it < stringFromFile.size(); it++)    //Starting at elemnt[1] till the last element in the string...
-                    blackbook.getEntry(it)       //get the elements [1]-[4] by dereferencing an iterator (pointer) of the stringFromFile variable.
+                    cout << "Find \"" << stringFromFile[2] << "\"" << endl;
+
+                    for(int i = 0; i < blackbook.size(); i++){    //Starting at elemnt[0] till the last element in the contact list object...
+
+                      if (foundData.insert(blackbook.getEntry(stringFromFile[2]))){       //Set that holds a subset of our contact list that matches the last name currently in
+                        cout << "Found." << endl;
+                        for(int i = 0; i < foundData.size(); i++){  //We need to iterate through our set to print out all the entries we found that match the current last name in stringFromFile[1]
+                          cout << " " << foundData[i].getFirstName() << " " <<  foundData[i].getLastName() << ", " << foundData[i].getBirthMonth() << "/" <<  foundData[i].getBirthDay() << "/" << foundData[i].getBirthYear() << endl;
+
+                        }
+                      }
+                    }
+                    if (!foundData.insert(blackbook.getEntry(stringFromFile[2]))){ //This if statement is executed if the insert function is
+                      cout << " Not found." << endl;
+                    }
+                    stringFromFile.clear(); //Reset our vector after processing the line
                     break;
 
         case r:                   /*
                                   R key : Remove all records from the contact list with a key value (last name) indicated by key. Display all matching records that are deleted. Display an error message if no record matches the given key. Compare with Delete above. Example:
                                       R Wright
                                   */
-                   for(int it = 1; it < stringFromFile.size(); it++)    //Starting at elemnt[0] till the last element in the string...
-                   blackbook.removeAll(it)       //Add the elements [1]-[4] by dereferencing an iterator (pointer) of the stringFromFile variable.
+                   cout << "Remove \"" << stringFromFile[2] << "\"" << endl;
+
+                   blackbook.removeAll(stringFromFile[2])       //remove all last names matching stringFromFile[2] from the contact list.
+                   stringFromFile.clear(); //Reset our vector after processing the line
                    break;
 
         case s:                   /*

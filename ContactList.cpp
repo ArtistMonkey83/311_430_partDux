@@ -59,7 +59,7 @@ bool contactList::remove( const string& aKey ){
                            // update the multimap with the new index for the last item swapped
          return true;
        }
-       else
+       if( removeIndex.first() - removeIndex.second() > 1)
          return false;     //we didn't find a single aKey in our contact list and therefore didn't remove a contact object, we could have found multiple aKeys but if so we don't have enough information to decide which to remove
 
 }
