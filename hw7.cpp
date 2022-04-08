@@ -198,6 +198,19 @@ int main()
     cout << "Table size for stringSet: " << stringSet.bucket_count() << " Load factor: " <<   stringSet.load_factor()<< endl;
     stringSet.insert("compl");
     cout << "Table size for stringSet: " << stringSet.bucket_count() << " Load factor: " <<   stringSet.load_factor()<< endl;
+    cout << "stringSet contains:";
+      for ( auto it = stringSet.begin(); it != stringSet.end(); ++it )
+        cout << " " << *it;
+        cout << std::endl;
+
+      cout << "stringSet's buckets contain:\n";
+      for ( unsigned i = 0; i < stringSet.bucket_count(); ++i) {
+        cout << "bucket #" << i << " contains:";
+        for ( auto local_it = stringSet.begin(i); local_it!= stringSet.end(i); ++local_it )
+          cout << " " << *local_it;
+          cout << endl;
+      }
+    cout << endl;
     stringSet.insert("const");
     cout << "Table size for stringSet: " << stringSet.bucket_count() << " Load factor: "  <<  stringSet.load_factor()<< endl;
     stringSet.insert("const_cast");
@@ -230,6 +243,19 @@ int main()
     cout << "Table size for stringSet: " << stringSet.bucket_count() << " Load factor: "  <<  stringSet.load_factor()<< endl;
     stringSet.insert("float");
     cout << "Table size for stringSet: " << stringSet.bucket_count() << " Load factor: "  <<  stringSet.load_factor()<< endl;
+    cout << "stringSet contains:";
+      for ( auto it = stringSet.begin(); it != stringSet.end(); ++it )
+        cout << " " << *it;
+        cout << std::endl;
+
+      cout << "stringSet's buckets contain:\n";
+      for ( unsigned i = 0; i < stringSet.bucket_count(); ++i) {
+        cout << "bucket #" << i << " contains:";
+        for ( auto local_it = stringSet.begin(i); local_it!= stringSet.end(i); ++local_it )
+          cout << " " << *local_it;
+          cout << endl;
+      }
+    cout << endl;
     stringSet.insert("for");
     cout << "Table size for stringSet: " << stringSet.bucket_count() << " Load factor: "  <<  stringSet.load_factor()<< endl;
     stringSet.insert("friend");
@@ -288,6 +314,20 @@ int main()
     cout << "Table size for stringSet: " << stringSet.bucket_count() << " Load factor: "  <<  stringSet.load_factor()<< endl;
     stringSet.insert("switch");
     cout << "Table size for stringSet: " << stringSet.bucket_count() << " Load factor: "  <<  stringSet.load_factor()<< endl;
+    cout << "stringSet contains:";
+      for ( auto it = stringSet.begin(); it != stringSet.end(); ++it )
+        cout << " " << *it;
+        cout << std::endl;
+
+      cout << "stringSet's buckets contain:\n";
+      for ( unsigned i = 0; i < stringSet.bucket_count(); ++i) {
+        cout << "bucket #" << i << " contains:";
+        for ( auto local_it = stringSet.begin(i); local_it!= stringSet.end(i); ++local_it )
+          cout << " " << *local_it;
+          cout << endl;
+      }
+    cout << endl;
+
     stringSet.insert("template");
     cout << "Table size for stringSet: " << stringSet.bucket_count() << " Load factor: "  <<  stringSet.load_factor()<< endl;
     stringSet.insert("this");
@@ -337,7 +377,7 @@ int main()
       }
     cout << endl;
 
-    //Can you identify what rule is used to increase the table size? If you can identify the rule, express it in terms of the load factor, α.
+    //Can you identify what rule is used to increase the table size? If you can identify the rule, express it in terms of the load factor, α. when(stringSet.load_factor() > 1 ) we resize the hash table with a value computed by the equation 29 = 13x
 
 
     // What is the maximum number of entries in a bucket (and identify all the buckets that have this many entries)?
