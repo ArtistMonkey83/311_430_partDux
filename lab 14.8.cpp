@@ -41,25 +41,25 @@ void addEdge(Graph& gAdd, unsigned u, unsigned v){
   int vsize = gPrint.sVertices.size(),
       esize = gPrint.mEdges.size() ;
 
-  cout << "Graph has " << vsize <<" vertices and " << esize <<" edges." <<endl;
-  cout << "  V={";
+  os << "Graph has " << vsize <<" vertices and " << esize <<" edges." <<endl;
+  os << "  V={";
   for(auto it=gPrint.sVertices.begin(); it!=gPrint.sVertices.end();it++){
-    cout << *it;
+    os << *it;
     vsize--;
     if (vsize!= 0){
-      cout <<",";
+      os <<",";
     }
   }
-  cout << "}"<<endl;
+  os << "}"<<endl;
 
-  cout <<"  E={";
+  os <<"  E={";
   for (auto it=gPrint.mEdges.begin(); it!=gPrint.mEdges.end(); it++){
-    cout << "(" << it->first << "," << it->second << ")";
+    os << "(" << it->first << "," << it->second << ")";
     esize--;
-    if (esize != 0){ //esize-1???
-      cout << ",";
+    if (esize != 0){
+      os << ",";
     }
   }
-  cout << "}";
+  os << "}";
   return os;
 }
