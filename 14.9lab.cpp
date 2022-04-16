@@ -15,6 +15,7 @@ You will overload the operator+ to represent the union operation on graphs.
 #include <map>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -66,7 +67,7 @@ void addEdge(Graph& gAdd, unsigned u, unsigned v){
 }
 
 // Overloaded operator+ to implement union of two graphs
-Graph operator+(Graph const &lhs, Graph const &rhs){
+Graph operator+(Graph const &lhs, Graph const &rhs) {
   Graph catenatedGraph;
 
   for(auto it=lhs.sVertices.begin(); it!=lhs.sVertices.end();it++){
@@ -79,34 +80,29 @@ Graph operator+(Graph const &lhs, Graph const &rhs){
 
   for (auto it=lhs.mEdges.begin(); it!=lhs.mEdges.end(); it++){
 
-      catenatedGraph.mEdges.insert(make_pair(it->first,it->second))
-
-
+      catenatedGraph.mEdges.insert(make_pair(it->first,it->second));
   }
 
-  for (auto it=rhs.mEdges.begin(); it!=rhs.mEdges.end(); it++){
-    //make_pair(it->first,it->second)
-    if (catenatedGraph.mEdges.equal_range(it)==){
-      catenatedGraph.mEdges.insert(make_pair(it->first,it->second))
+  for (auto its=rhs.mEdges.begin(); its!=rhs.mEdges.end(); its++){
+    pair <unsigned,unsigned> uPair = make_pair(its->first,its->second);
+    auto errorChk = catenatedGraph.mEdges.equal_range(its->first);
+    bool canInsert = true;
+    for (auto it=errorChk.first; it!=errorChk.second; ++it)
+      {
+      if (its->second == it->second){
+        canInsert=false;
+      }
+
+
     }
-  }
+    //if(errorChk.first != errorChk.second){
+    if(canInsert){
+        catenatedGraph.mEdges.insert(uPair);
+    }
 
+    //
+    //
+
+  }
   return catenatedGraph;
 }
-
-
-/* Overloaded operator- to implement difference of two graphs
-Graph operator-(Graph const &lhs, Graph const &rhs){
-  Graph differGraph;
-
-  for(auto it=lhs.sVertices.begin(); it!=lhs.sVertices.end();it++){
-
-  }
-
-  for (auto it=lhs.mEdges.begin(); it!=lhs.mEdges.end(); it++){
-
-  }
-  return differGraph;
-
-}
-*/
