@@ -41,28 +41,54 @@ void addEdge(Graph& gAdd, unsigned u, unsigned v){
  ostream& operator<< (ostream &os, const Graph& gPrint) {
   //if(gPrint.sVertices.size()==0){ return os;}
   int vsize = gPrint.sVertices.size(),
-      esize = gPrint.mEdges.size() ;
+      esize = gPrint.mEdges.size();
+      //setSize = 0;
 
-  cout << "Graph has " << vsize <<" vertices and " << esize <<" edges." <<endl;
-  cout << "  V={";
+  os << "Graph has " << vsize <<" vertices and " << esize <<" edges." <<endl;
+  os << "  V={";
   for(auto it=gPrint.sVertices.begin(); it!=gPrint.sVertices.end();it++){
-    cout << *it;
+    os << *it;
     vsize--;
     if (vsize!= 0){
-      cout <<",";
+      os <<",";
     }
   }
-  cout << "}"<<endl;
+  os << "}"<<endl;
 
-  cout <<"  E={";
+  os <<"  E={";
   for (auto it=gPrint.mEdges.begin(); it!=gPrint.mEdges.end(); it++){
-    cout << "(" << it->first << "," << it->second << ")";
-    esize--;
-    if (esize != 0){
-      cout << ",";
-    }
+    unsigned ascending = gPrint.mEdges.count(it->first);  // use gprint.mEdges.count(it->first) here
+    //pair <unsigned,unsigned> ascendingPair;
+    set <unsigned> sSorted;
+      if(ascending >1){   // if that count is > 1
+
+        auto ascendingPair = gPrint.mEdges.equal_range(it->first);    //  use equal_range(it->first) here for all pairs with same it->first values
+        for(auto it2 = ascendingPair.first; it2!= ascendingPair.second;it2++){
+          sSorted.insert(it2->second);      //    push 2nd items of all those pairs into a set by iterating over the equal range so that the different 'it->second's get sorted
+          //setSize++;
+        //  os<< "setSize: " <<setSize;
+          //os<< "esize: " <<esize;
+        }
+
+        for(auto iter = sSorted.begin(); iter!=sSorted.end();iter++){   //    iterate over newly created set and os << it->first << curr_set_item << endl;
+          os << "(" << it->first << "," << *iter << ")";
+          it++;
+          esize--;
+
+           if (esize > 1){os << ",";}
+        }
+        //esize=- ascending;
+        //setSize=0;
+      }
+      else{
+        esize--;
+        os << "(" << it->first << "," << it->second << ")";
+         if (esize > 2){os << ",";}
+      }
+
   }
-  cout << "}";
+//os << "esize is: "<< esize;
+  os << "}";
   return os;
 }
 
