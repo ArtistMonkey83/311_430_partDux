@@ -1,11 +1,5 @@
 // Graph.h
 
-#include <set>
-#include <map>
-#include <vector>
-#include <iostream>
-
-using namespace std;
 
 // Insert any code you need from your prior lab(s) here ...
 #include <set>
@@ -133,19 +127,22 @@ Graph operator-(Graph const &lhs, Graph const &rhs){
     bool canInsert = true;
     pair <unsigned,unsigned> uPair = make_pair(itl->first,itl->second);
     for (auto itr=rhs.mEdges.begin(); itr!=rhs.mEdges.end(); itr++){
-      uPair = make_pair(itr->first,itr->second);
-      auto mdiffChk = differGraph.mEdges.equal_range(itr->first);
+      //uPair = make_pair(itl->first,itl->second);
+      //auto mdiffChk = lhs.mEdges.equal_range(itr->first);
 
-      for (auto itd=mdiffChk.first; itd!=mdiffChk.second; ++itd)
-        {
-        if (itr->first == itl->second && itr->second == itl->first) {
+      //for (auto itd=mdiffChk.first; itd!=mdiffChk.second; ++itd)
+
+        if (itr->first == itl->first && itr->second == itl->second) {
           canInsert=false;
           break;
           }
-        }
+        //}
 
     }
-    if(canInsert) {differGraph.mEdges.insert(uPair);}
+    if(canInsert && differGraph.sVertices.find(itl->first)!= differGraph.sVertices.end() && differGraph.sVertices.find(itl->second)!= differGraph.sVertices.end()) {
+
+      differGraph.mEdges.insert(uPair);
+    }
   }
   return differGraph;
 
