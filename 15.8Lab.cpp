@@ -116,7 +116,7 @@ Graph operator+(Graph const &lhs, Graph const &rhs) {
 Graph operator-(Graph const &lhs, Graph const &rhs){
   Graph differGraph;
 
-  for(auto itl=lhs.sVertices.begin(); itl!=lhs.sVertices.end();itl++){       //itterate through the lhs
+ for(auto itl=lhs.sVertices.begin(); itl!=lhs.sVertices.end();itl++){       //itterate through the lhs
       bool canInsert = true;
     for (auto itr=rhs.sVertices.begin(); itr!=rhs.sVertices.end(); itr++){   //itterate through the rhs
 
@@ -124,29 +124,28 @@ Graph operator-(Graph const &lhs, Graph const &rhs){
           canInsert=false;
           break;
         }                   //if the rhs graph's (u,v) v member is equal to the lhs v member don't insert
-
-
-      if(canInsert) {differGraph.sVertices.insert(*itr);}
-
     }
+    if(canInsert) {differGraph.sVertices.insert(*itl);}
   }
 
+
   for (auto itl=lhs.mEdges.begin(); itl!=lhs.mEdges.end(); itl++){
+    bool canInsert = true;
+    pair <unsigned,unsigned> uPair = make_pair(itl->first,itl->second);
     for (auto itr=rhs.mEdges.begin(); itr!=rhs.mEdges.end(); itr++){
-      pair <unsigned,unsigned> uPair = make_pair(itr->first,itr->second);
+      uPair = make_pair(itr->first,itr->second);
       auto mdiffChk = differGraph.mEdges.equal_range(itr->first);
-      bool canInsert = true;
+
       for (auto itd=mdiffChk.first; itd!=mdiffChk.second; ++itd)
         {
-        if (itr->second == itl->second) {
+        if (itr->first == itl->second && itr->second == itl->first) {
           canInsert=false;
           break;
           }
         }
 
-      if(canInsert) {differGraph.mEdges.insert(uPair);}
-
     }
+    if(canInsert) {differGraph.mEdges.insert(uPair);}
   }
   return differGraph;
 
