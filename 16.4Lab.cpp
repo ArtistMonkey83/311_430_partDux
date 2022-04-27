@@ -70,40 +70,36 @@ ostream& operator<< (ostream &os, const Graph& gPrint) {
  return os;
 }
 
+
+
+
+// A utility function to do DFS of graph
+// recursively from a given vertex u.
+void DFS(multimap<int,bool> mvVisted){
+  for( auto u = mvVisted.begin(); u != mvVisted.end(); u++){  //iterate through the vertices initialized to fals because they havent been visted
+    //cout <<"we made it inside the DFS"<<endl;
+    if( u->second == false){
+      //cout <<"u second1 =="<< u->second << endl;
+      u->second = true;
+      //cout <<"u second2 =="<< u->second << endl;
+      DFS(mvVisted);    //we are seg faulting here
+
+      //cout << "we made it out of the recursive DFSUtil call" << endl;
+    }
+  }
+}
 // Function that does DFS() for all
-// unvisited vertices. makes sure that we call dfs on all nodes in graph
+// unvisited vertices.
 void DFSUtil(multimap<int,bool> mvVisted){
 
   for (auto i=mvVisted.begin(); i != mvVisted.end(); i++){
     if( i->second == false){
-      DFSUtil(mvVisted);
+      DFS(mvVisted);
     }
 
   }
 
 }
-
-
-// A utility function to do DFS of graph
-// recursively from a given vertex u. call on our starting node
-/*
-itterate each node go as deep as you can
-*/
-void DFS(multimap<int,bool> mvVisted){
-//updates node values in the container
-  // from GeeksForGeeks: vector<bool> visted(v,false);
-  for( auto u = mvVisted.begin(); u != mvVisted.end(); u++){  //iterate through the vertices initialized to fals because they havent been visted
-    cout <<"we made it inside the DFS"<<endl;
-    if( u->second == false){
-      cout <<"u second1 =="<< u->second << endl;
-      u->second = true;
-      cout <<"u second2 =="<< u->second << endl;
-      DFSUtil(mvVisted);
-      cout << "we made it out of the recursive DFSUtil call" << endl;
-    }
-  }
-}
-
 // Function that determines whether a given graph
 // is connected or not. map each node to visited status multimap
 bool connected(Graph const &gConnect){
@@ -112,16 +108,20 @@ bool connected(Graph const &gConnect){
   for(auto i = gConnect.sVertices.begin(); i!= gConnect.sVertices.end();i++ ){
     mvistedVertex.insert(make_pair(*i,false));
   }
-  cout << "we made it into the connected function" << endl;
-  DFS(mvistedVertex);//dfs is called once passing the container by reference
-  cout << "we made it out of DFS in connected function" << endl;
+  //cout << "we made it into the connected function" << endl;
+  DFSUtil(mvistedVertex);//dfs is called once passing the container by reference
+  //cout << "we made it out of DFS in connected function" << endl;
   for(auto i = mvistedVertex.begin(); i != mvistedVertex.end(); i++){
+
     if ( i->second == false)
     {
       connectedResult = false;
     }
     else
       connectedResult = true;
+  }
+  if(mvistedVertex.size() == 0){
+    connectedResult = true;
   }
   return connectedResult;
 // check the updated values
