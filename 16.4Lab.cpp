@@ -17,8 +17,12 @@ typedef struct Graph{
 //A utility function to sort edges in a graphs
 void edgesToSort( multimap<unsigned,unsigned>& gToSort ){
   vector <pair <unsigned,unsigned>> pSorted; //vector?
+  set<pair<unsigned,unsigned>> temp;
   for(auto it3 = gToSort.begin(); it3!=gToSort.end();it3++){
-    pSorted.push_back(make_pair(it3->first,it3->second)); //copy from mEdges
+    temp.insert(make_pair(it3->first,it3->second)); //copy from mEdges
+  }
+  for(auto it2 = temp.begin(); it2!= temp.end(); it2++){
+    pSorted.push_back(*it2);
   }
   sort(pSorted.begin(),pSorted.end());    //run sort,
   gToSort.clear();   //clear mEdges,
@@ -29,21 +33,35 @@ void edgesToSort( multimap<unsigned,unsigned>& gToSort ){
   }
 
 }
+bool hasEdge(Graph g, unsigned u, unsigned v){
+  auto range = g.mEdges.equal_range(u);
+  for( auto i =range.first; i != range.second; i++){
+    if(v==i->second){
+      return true;
+    }
+  }
+  return false;
+}
 // A utility function to add an edge in an
 // undirected graph (from our 23.1 LAB)
 void addEdge(Graph& gAdd, unsigned u, unsigned v){
   //think make pair (1,4) this represents an edge between 1-4
   gAdd.sVertices.insert(u);//just a list of all the vertices I have in graph
   gAdd.sVertices.insert(v);//just a list of all the vertices I have in graph
-  gAdd.mEdges.insert(make_pair(u,v));// makepair u,v
-  gAdd.mEdges.insert(make_pair(v,u));// makepair v,u
+  if(!hasEdge(gAdd,u,v)){
+    gAdd.mEdges.insert(make_pair(u,v));// makepair u,v
+  }
+  if(!hasEdge(gAdd,v,u)){
+    gAdd.mEdges.insert(make_pair(v,u));// makepair v,u
+  }
   edgesToSort(gAdd.mEdges);
+
 
 }
 
 // Overloaded operator<< to "display" a graph (from our 23.1 LAB)
 ostream& operator<< (ostream &os, const Graph& gPrint) {
- //if(gPrint.sVertices.size()==0){ return os;}
+
  int vsize = gPrint.sVertices.size(),
      esize = gPrint.mEdges.size() ;
 
@@ -57,16 +75,19 @@ ostream& operator<< (ostream &os, const Graph& gPrint) {
    }
  }
  os << "}"<<endl;
+ int counter=0;
 
  os <<"  E={";
  for (auto it=gPrint.mEdges.begin(); it!=gPrint.mEdges.end(); it++){
    os << "(" << it->first << "," << it->second << ")";
    esize--;
+   counter++;
    if (esize != 0){
      os << ",";
    }
  }
  os << "}";
+ cout <<"counter has: " << counter <<endl;
  return os;
 }
 
@@ -75,26 +96,22 @@ ostream& operator<< (ostream &os, const Graph& gPrint) {
 
 // A utility function to do DFS of graph
 // recursively from a given vertex u.
-void DFS(multimap<int,bool> mvVisted){
-  for( auto u = mvVisted.begin(); u != mvVisted.end(); u++){  //iterate through the vertices initialized to fals because they havent been visted
-    //cout <<"we made it inside the DFS"<<endl;
-    if( u->second == false){
-      //cout <<"u second1 =="<< u->second << endl;
-      u->second = true;
-      //cout <<"u second2 =="<< u->second << endl;
-      DFS(mvVisted);    //we are seg faulting here
-
-      //cout << "we made it out of the recursive DFSUtil call" << endl;
+void DFSUtil(unsigned node,map<int,bool> &mvVisted, Graph const &gConnect){
+  mvVisted.at(node)= true;
+  auto range=gConnect.mEdges.equal_range(node);
+  for( auto u = range.first; u != range.second; u++){  //iterate through the vertices initialized to fals because they havent been visted
+    if( mvVisted.at(u->second) == false){
+      DFSUtil(u->second,mvVisted,gConnect);    //we are seg faulting here
     }
   }
 }
 // Function that does DFS() for all
 // unvisited vertices.
-void DFSUtil(multimap<int,bool> mvVisted){
+void DFS(map<int,bool> mvVisted,Graph const &gConnect){
 
   for (auto i=mvVisted.begin(); i != mvVisted.end(); i++){
     if( i->second == false){
-      DFS(mvVisted);
+      DFSUtil(i->second,mvVisted,gConnect);
     }
 
   }
@@ -103,27 +120,22 @@ void DFSUtil(multimap<int,bool> mvVisted){
 // Function that determines whether a given graph
 // is connected or not. map each node to visited status multimap
 bool connected(Graph const &gConnect){
-  multimap<int, bool> mvistedVertex;  //make container to hold node and visited status
-  bool connectedResult;
+  if(gConnect.sVertices.size() == 0){
+   return true;}
+  map<int, bool> mvistedVertex;  //make container to hold node and visited status
   for(auto i = gConnect.sVertices.begin(); i!= gConnect.sVertices.end();i++ ){
     mvistedVertex.insert(make_pair(*i,false));
   }
-  //cout << "we made it into the connected function" << endl;
-  DFSUtil(mvistedVertex);//dfs is called once passing the container by reference
-  //cout << "we made it out of DFS in connected function" << endl;
-  for(auto i = mvistedVertex.begin(); i != mvistedVertex.end(); i++){
+  DFSUtil(*(gConnect.sVertices.begin()),mvistedVertex,gConnect);
+    for(auto i = mvistedVertex.begin(); i != mvistedVertex.end(); i++){
 
-    if ( i->second == false)
-    {
-      connectedResult = false;
+      if ( i->second == false)
+      {
+       return false;
+     }
+
     }
-    else
-      connectedResult = true;
-  }
-  if(mvistedVertex.size() == 0){
-    connectedResult = true;
-  }
-  return connectedResult;
+  return true;
 // check the updated values
 //one false we return false
 
