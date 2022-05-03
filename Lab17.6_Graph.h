@@ -65,7 +65,7 @@ ostream& operator<< (ostream &os, const Graph& gPrint) {
  int vsize = gPrint.sVertices.size(),
      esize = gPrint.mEdges.size() ;
 
- os << "Graph has " << vsize <<" vertices and " << esize <<" edges." <<endl;
+ os << "Digraph G has " << vsize <<" vertices and " << esize <<" edges:" <<endl;
  os << "  V={";
  for(auto it=gPrint.sVertices.begin(); it!=gPrint.sVertices.end();it++){
    os << *it;
@@ -87,64 +87,48 @@ ostream& operator<< (ostream &os, const Graph& gPrint) {
    }
  }
  os << "}";
- cout <<"counter has: " << counter <<endl;
+ //cout <<"counter has: " << counter <<endl;
  return os;
 }
 
 // A utility function to do DFS of graph
 // recursively from a given vertex u.
-void DFSUtil(unsigned node,map<int,bool> &mvVisted, Graph const &gConnect,vector<unsigned> &topoList){
+void DFSUtil(unsigned node,map<int,bool> &mvVisted, Graph const &gToSort,vector<unsigned> &topoList){
   mvVisted.at(node)= true;
-  auto range=gConnect.mEdges.equal_range(node);
+  auto range=gToSort.mEdges.equal_range(node);
   for( auto u = range.first; u != range.second; u++){  //iterate through the vertices initialized to false because they havent been visted
     if( mvVisted.at(u->second) == false){
-      DFSUtil(u->second,mvVisted,gConnect,topoList);    //we are seg faulting here
+      DFSUtil(u->second,mvVisted,gToSort,topoList);    //we are seg faulting here
     }
-    topoList.push_back(u->first);//vector<unsigned> push_back happens here after we have visted all adjacent nodes of a vertex
+    if(hasEdge(gToSort,u->first,u->second)){
+      //if(mvVisted)    //WE NEED TO CHECK AND SEE IF THE EDGE EXSITS!!
+      auto it = topoList.begin();
+      topoList.emplace(it,u->first);//vector<unsigned> push_back happens here after we have visted all adjacent nodes of a vertex WE NEED TO INSERT IN THE FRONT NOT THE REAR
+    }
+
   }
 }
 // Function that does DFS() for all
 // unvisited vertices.
-void DFS(map<int,bool> mvVisted,Graph const &gConnect,vector<unsigned> &topoList){
+void DFS(map<int,bool> mvVisted,Graph const &gToSort,vector<unsigned> &topoList){
 
   for (auto i=mvVisted.begin(); i != mvVisted.end(); i++){
     if( i->second == false){
-      DFSUtil(i->second,mvVisted,gConnect,topoList);
+      DFSUtil(i->second,mvVisted,gToSort,topoList);
     }
 
   }
 
 }
-// Function that determines whether a given graph
-// is connected or not. map each node to visited status multimap
-bool connected(Graph const &gConnect, vector<unsigned> &topoList){
-  if(gConnect.sVertices.size() == 0){
-   return true;}
-  map<int, bool> mvistedVertex;  //make container to hold node and visited status
-  for(auto i = gConnect.sVertices.begin(); i!= gConnect.sVertices.end();i++ ){
-    mvistedVertex.insert(make_pair(*i,false));
-  }
-  DFSUtil(*(gConnect.sVertices.begin()),mvistedVertex,gConnect, &topoList);
-    for(auto i = mvistedVertex.begin(); i != mvistedVertex.end(); i++){
 
-      if ( i->second == false)
-      {
-       return false;
-     }
-
-    }
-  return true;
-// check the updated values
-//one false we return false
-
-}
 // Code for topologicalSort() function goes here ...
 vector<unsigned> topologicalSort(Graph const &gToSort){
-  vector<unsigned> gSorted;
-
-  if(!connected(gToSort, gSorted)){ //if the graph is not connected we need to recursively call DFS to search all nodes, creating a DFS forrest
-    DFS(mvistedVertex,gToSort,gSorted);
-
+  vector<unsigned> gSorted;   //This will hold the stack representing our tree starting at the root
+  map<int, bool> mvistedVertex;  //make container to hold node and visited status
+  for(auto i = gToSort.sVertices.begin(); i!= gToSort.sVertices.end();i++ ){
+    mvistedVertex.insert(make_pair(*i,false));
   }
+  DFS(mvistedVertex,gToSort,gSorted);
+
   return gSorted;
 }
