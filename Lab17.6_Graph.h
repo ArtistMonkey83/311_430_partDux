@@ -44,7 +44,7 @@ bool hasEdge(Graph g, unsigned u, unsigned v){
   return false;
 }
 // A utility function to add an edge in an
-// undirected graph (from our 23.1 LAB)
+// DIRECTED GRAPH graph (from our 23.1 LAB)
 void addEdge(Graph& gAdd, unsigned u, unsigned v){
   //think make pair (1,4) this represents an edge between 1-4
   gAdd.sVertices.insert(u);//just a list of all the vertices I have in graph
@@ -52,9 +52,9 @@ void addEdge(Graph& gAdd, unsigned u, unsigned v){
   if(!hasEdge(gAdd,u,v)){
     gAdd.mEdges.insert(make_pair(u,v));// makepair u,v
   }
-  if(!hasEdge(gAdd,v,u)){
-    gAdd.mEdges.insert(make_pair(v,u));// makepair v,u
-  }
+  //if(!hasEdge(gAdd,v,u)){
+    //gAdd.mEdges.insert(make_pair(v,u));// makepair v,u
+  //}
   edgesToSort(gAdd.mEdges);
 
 
@@ -94,19 +94,29 @@ ostream& operator<< (ostream &os, const Graph& gPrint) {
 // A utility function to do DFS of graph
 // recursively from a given vertex u.
 void DFSUtil(unsigned node,map<int,bool> &mvVisted, Graph const &gToSort,vector<unsigned> &topoList){
-  mvVisted.at(node)= true;
+  mvVisted[node] = true;
+
   auto range=gToSort.mEdges.equal_range(node);
   for( auto u = range.first; u != range.second; u++){  //iterate through the vertices initialized to false because they havent been visted
-    if( mvVisted.at(u->second) == false){
-      DFSUtil(u->second,mvVisted,gToSort,topoList);    //we are seg faulting here
+    //condition to check that you are in range first
+    //topoList.push_back(u->second);
+    if( mvVisted[u->second] == false){
+      DFSUtil(u->second,mvVisted,gToSort,topoList);
+      //if(!hasEdge(gToSort,u->first,u->second)){
+        //if(mvVisted)    //WE NEED TO CHECK AND SEE IF THE EDGE EXSITS!!
+        //auto it = topoList.begin();
+        //topoList.push_back(u->second);//vector<unsigned> push_back happens here after we have visted all adjacent nodes of a vertex WE NEED TO INSERT IN THE FRONT NOT THE REAR
+      //}
     }
-    if(hasEdge(gToSort,u->first,u->second)){
-      //if(mvVisted)    //WE NEED TO CHECK AND SEE IF THE EDGE EXSITS!!
-      auto it = topoList.begin();
-      topoList.emplace(it,u->first);//vector<unsigned> push_back happens here after we have visted all adjacent nodes of a vertex WE NEED TO INSERT IN THE FRONT NOT THE REAR
-    }
+//    topoList.push_back(u->second);//vector<unsigned> push_back happens here after we have visted all adjacent nodes of a vertex WE NEED TO INSERT IN THE FRONT NOT THE REAR
+
+//cout << "topoList contains : " << topoList.size() << " ";
 
   }
+  //this retutrns something in the topoList.push_back(node);//vector<unsigned> push_back happens here after we have visted all adjacent nodes of a vertex WE NEED TO INSERT IN THE FRONT NOT THE REAR
+
+//cout << "topoList contains : " << topoList.size() << " ";
+  return;
 }
 // Function that does DFS() for all
 // unvisited vertices.
@@ -116,7 +126,7 @@ void DFS(map<int,bool> mvVisted,Graph const &gToSort,vector<unsigned> &topoList)
     if( i->second == false){
       DFSUtil(i->second,mvVisted,gToSort,topoList);
     }
-
+    topoList.push_back(i->second);
   }
 
 }
@@ -126,9 +136,9 @@ vector<unsigned> topologicalSort(Graph const &gToSort){
   vector<unsigned> gSorted;   //This will hold the stack representing our tree starting at the root
   map<int, bool> mvistedVertex;  //make container to hold node and visited status
   for(auto i = gToSort.sVertices.begin(); i!= gToSort.sVertices.end();i++ ){
-    mvistedVertex.insert(make_pair(*i,false));
+    mvistedVertex[*i] = false;
   }
   DFS(mvistedVertex,gToSort,gSorted);
-
+cout << "gsorted contains : " << gSorted.size() << " ";
   return gSorted;
 }
