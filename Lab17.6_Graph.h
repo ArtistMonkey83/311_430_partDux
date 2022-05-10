@@ -32,8 +32,13 @@ void edgesToSort( multimap<unsigned,unsigned>& gToSort ){
   {  gToSort.insert(pSorted[i]);    //then insert into mEdges
 
   }
-
 }
+//  void verticesToSort( vector<unsigned> &vToSort ){
+
+//    sort(vToSort.cbegin(),vToSort.cend());    //run sort,
+
+//}
+
 bool hasEdge(Graph g, unsigned u, unsigned v){
   auto range = g.mEdges.equal_range(u);
   for( auto i =range.first; i != range.second; i++){
@@ -93,52 +98,42 @@ ostream& operator<< (ostream &os, const Graph& gPrint) {
 
 // A utility function to do DFS of graph
 // recursively from a given vertex u.
-void DFSUtil(unsigned node,map<int,bool> &mvVisted, Graph const &gToSort,vector<unsigned> &topoList){
+void DFSUtil(unsigned node,map<unsigned,bool> &mvVisted, Graph const &gToSort,vector<unsigned> &topoList){
   mvVisted[node] = true;
-
   auto range=gToSort.mEdges.equal_range(node);
   for( auto u = range.first; u != range.second; u++){  //iterate through the vertices initialized to false because they havent been visted
     //condition to check that you are in range first
-    //topoList.push_back(u->second);
-    if( mvVisted[u->second] == false){
-      DFSUtil(u->second,mvVisted,gToSort,topoList);
-      //if(!hasEdge(gToSort,u->first,u->second)){
-        //if(mvVisted)    //WE NEED TO CHECK AND SEE IF THE EDGE EXSITS!!
-        //auto it = topoList.begin();
-        //topoList.push_back(u->second);//vector<unsigned> push_back happens here after we have visted all adjacent nodes of a vertex WE NEED TO INSERT IN THE FRONT NOT THE REAR
-      //}
-    }
-//    topoList.push_back(u->second);//vector<unsigned> push_back happens here after we have visted all adjacent nodes of a vertex WE NEED TO INSERT IN THE FRONT NOT THE REAR
-
-//cout << "topoList contains : " << topoList.size() << " ";
-
+//for(auto u= gToSort.mEdges.begin(); u != gToSort.mEdges.end();u++){
+  if((u->first == node) && (mvVisted[u->second] == false)){
+    DFSUtil(u->second,mvVisted,gToSort,topoList);
+      topoList.insert(topoList.begin(),u->second);
+      }
   }
-  //this retutrns something in the topoList.push_back(node);//vector<unsigned> push_back happens here after we have visted all adjacent nodes of a vertex WE NEED TO INSERT IN THE FRONT NOT THE REAR
-
-//cout << "topoList contains : " << topoList.size() << " ";
+    //topoList.insert(topoList.begin(),node);
   return;
 }
 // Function that does DFS() for all
 // unvisited vertices.
-void DFS(map<int,bool> mvVisted,Graph const &gToSort,vector<unsigned> &topoList){
-
+void DFS(map<unsigned,bool> &mvVisted,Graph const &gToSort,vector<unsigned> &topoList){
   for (auto i=mvVisted.begin(); i != mvVisted.end(); i++){
     if( i->second == false){
-      DFSUtil(i->second,mvVisted,gToSort,topoList);
+      DFSUtil(i->first,mvVisted,gToSort,topoList);
+      topoList.insert(topoList.begin(),i->first);
     }
-    topoList.push_back(i->second);
+  //  verticesToSort(topoList);
   }
-
 }
-
 // Code for topologicalSort() function goes here ...
 vector<unsigned> topologicalSort(Graph const &gToSort){
   vector<unsigned> gSorted;   //This will hold the stack representing our tree starting at the root
-  map<int, bool> mvistedVertex;  //make container to hold node and visited status
+  map<unsigned, bool> mvistedVertex;  //make container to hold node and visited status
   for(auto i = gToSort.sVertices.begin(); i!= gToSort.sVertices.end();i++ ){
     mvistedVertex[*i] = false;
   }
   DFS(mvistedVertex,gToSort,gSorted);
-cout << "gsorted contains : " << gSorted.size() << " ";
+ //cout << "gsorted contains : " << gSorted.size() << " ";
+ //for (auto i = gSorted.begin(); i != gSorted.end(); i++){
+//   cout << *i ;
+ //}
   return gSorted;
 }
