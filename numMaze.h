@@ -16,37 +16,45 @@ void readMaze(Graph &inputMaze){ //nXm vertices that are not connectted?
   //Graph tempGraph;
   unsigned n, //number of rows
            m,  //number of columns
-           i = 0, //index counter
-           weights, //weight variable for a vertex
-           horizEdge = n - 1, //number of horizontal edges
-           vertEdge = m - 1;  //number of vertical edges
-           var;
-  vector<unsigned> vUWieghts; //local container to hold wieghts of the vertex
+           c = 0, //index counter
+           weights; //weight variable for a vertex
+  vector<vector<WeightedVertex>> matrix;
+
   cin >> n; //number rows
   cin >> m; //number columns
-  while(cin >> wieghts){    //wieghted vertex from standard in
-      WeightedVertex input;      //weightedvertex object?[i,weight] using a constructor
-      input.setNodeNumber(i); //node number starts at 0 ends at nXm
-      input.setNodeWeight(wieghts); //set the node(vertex) wieght to that value passed from calling function
 
-      vUWieghts[i].push_back (input.getNodeWeight(i));    //populating the vector with all of the maze's wieghts, index of vector represents the nodeNumber
+  for (auto i = 0; i < n; i++){   //for loop itterates through the rows
+    for(auto j = 0; j < m; j++){  //for loop iterates through the columns
+      cin >> wieghts;             //cin n*m vertex wieghts
+      matrix[i].push_back(wieghts);// push puack the weights for a specific row
+       }
+     }
 
-      //inputMaze.sVertices.insert(input);   //created the vertices now add them to graph
-      i++;
-  }
+  for (auto i = 0; i < n; i++){
+    for(auto j = 0; j < m; j++){
+      if(i+1 < n){   // if we are out of bounds on the row, don't add
+        if(j-1 < m){  //if we are out of bounds on the column, don't add
+          WeightedVertex  input,    //source
+                          input2,   //right destination
+                          input3;   //below destination
 
+          input.setNodeNumber(c);  //index of the source vertice
+          input.setNodeWeight(matrix[i][j]); //weight
 
-//create the edges for the above graph horizontally and vertically m-1 horizontal edges two loops for both edges
-map<WeightedVertex> temp; //temp map with -> second in WHAT?!?!
+          input2.setNodeNumber(c+1);   //index of the next vertice to the right
+          input2.setNodeWeight(matrix[i][j+1]);  //weight
 
+          input3.setNodeNumber(c+m);  //index of vertice below source
+          input3.setNodeWeight(matrix[i+1][j]); //weight
 
-    for(auto i = 0; i != n-1;i++){  //for loop that will itterate through the rows graph
-      for(auto j = 0; j!= m-1;j++){ //for loop that will itterate through the columns of a graph
-          var =
-          if( (n*m >= var) && (var%n == 0))
-        }
+          add(input,input2); //adds horizontal edge to the right of source
+          add(input,input3); //adds vertical edge below source
+          c++;               //increments our source vertex
+
+       }
       }
-
+    }
+   }
   return;
 }
 
@@ -63,8 +71,9 @@ map<WeightedVertex> temp; //temp map with -> second in WHAT?!?!
  //D's algorithm, adjust to the weights on the vertices relax needs to be modified
   map<WeightedVertex,int> vD;  //shortest distance from source
   map<WeightedVertex,WeightedVertex> vPi;  //map that will hold parent info map from weighted vertex to weighted vertex  MAX_UNT FOR INFITITY information
-  //insert vertices into priority que v.d the priority que needs to be ordered overload comparison operator for order of weighted vertex class?
 
+  //insert vertices into priority que v.d the priority que needs to be ordered overload comparison operator for order of weighted vertex class?
+  priority_queue<WeightedVertex> theQueue; //ordered by d values! pair (v.d, WeightedVertex)
   //while priorty que is not empty, pop and then extract adjacent vertexLabel
   //
 

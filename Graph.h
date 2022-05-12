@@ -28,11 +28,9 @@ public:
   };
 //add(WeightedVertex source, unsigned destination, int edgeWeight=1): adds an edge between vertices source and destination with weight edgeWeight (which defaults to 1)
   bool add(WeightedVertex source, WeightedVertex destination, int edgeWeight=1){
-    bool added = false,
-         canInsert = true;
 
-    auto foundSource = this.sVertices.find(source);
-    auto foundDestination = this.sVertices.find(destination);
+    auto foundSource = this.sVertices.find(source);   //have we added the source vertex already?
+    auto foundDestination = this.sVertices.find(destination); //have we added the destination vertex already?
 
     if(foundSource == this.end())   //returns true if source isn't found, meaning we need to add the Vertex
     {
@@ -45,7 +43,6 @@ public:
 
     this.mEdge.insert(make_pair(source,destination));    //adding the edge only if statement in line 48 returns false, meaning we didn't find this edge to already exist
     added = true;
-
 
     return added;
   }
@@ -103,7 +100,7 @@ public:
         return 0; //If we don't have an edge between source and destination we return 0
   }
 //getVertices(): returns a set containing the vertices in the graph
-  set <WeightedVertex> verticesRetrieved(){ //IS THE DATA TYPE CORRECT FOR THESE SETS??!?!
+  set <WeightedVertex> getVertices(){ //IS THE DATA TYPE CORRECT FOR THESE SETS??!?!
     set<WeightedVertex> vertsInGraph;
 
     for(auto i = this.sVertices.begin(); i != this.sVertices.end(); i++){   //itterate through all vertices in the object that called this function "this"
@@ -114,7 +111,7 @@ public:
     return vertsInGraph;
   }
 //getAdjacent(unsigned v): returns a set containing the vertices in the graph that are adjacent to a given vertex
-  set <WeightedVertex> verticesAdjacent(WeightedVertex v) {
+  set <WeightedVertex> getAdjacent(WeightedVertex v) {
     set<WeightedVertex> adjVerts;
     bool canAdd = false;
 

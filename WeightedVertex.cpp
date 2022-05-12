@@ -21,4 +21,5 @@ void WeightedVertex::setNodeWeight( unsigned vertexWeight){
 }
 //comparison operator overloaded
 
+
 //constructor?
