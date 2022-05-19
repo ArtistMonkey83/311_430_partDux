@@ -6,13 +6,16 @@
 //what we need to define a weighted graph
 class WeightedVertex{
 private:
-  unsigned nodeNumber,
-           weight;    //weight
+  unsigned nodeNumber;
+  unsigned weight;    //weight
 public:
+  WeightedVertex(unsigned nodeNumber, unsigned weight);
+  ~WeightedVertex();
+
   unsigned getNodeNumber();
   unsigned getNodeWeight();
-  unsigned setNodeNumber(unsigned vertexLabel);
-  unsigned setNodeWeight(unsigned vertexWeight);
+  void setNodeNumber(unsigned vertexLabel);
+  void setNodeWeight(unsigned vertexWeight);
 //map for holding the following?
 //node number something.number
 //distance (wieght) something.distance ?

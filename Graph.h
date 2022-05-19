@@ -7,6 +7,11 @@
 #include <map>
 
 #include "WeightedVertex.h"
+#include <iostream>
+#include <vector>
+#include <utility>
+
+using namespace std;
 
 // CLASS DEFINITION/PROTOTYPE   how do I implement this?!?
 template <typename  T>
@@ -17,6 +22,9 @@ private:
   map<WeightedVertex,map<WeightedVertex,int>> mEdges;    //int == weight, 1st WeightedVertex = source 2nd WeightedVertex = destination
 
 public:
+//constructor
+Graph(string name){}
+
 //getNumVertices(): returns the number of vertices in the graph
   int getNumVertices() const {
     sVertices.size();
@@ -26,6 +34,8 @@ public:
   int getNumEdges() const {
     return mEdges.size();
   };
+~Graph (){};
+/*
 //add(WeightedVertex source, unsigned destination, int edgeWeight=1): adds an edge between vertices source and destination with weight edgeWeight (which defaults to 1)
   bool add(WeightedVertex source, WeightedVertex destination, int edgeWeight=1){
 
@@ -41,7 +51,7 @@ public:
       this.sVertices.insert(destination);
     }
 
-    this.mEdge.insert(make_pair(source,destination));    //adding the edge only if statement in line 48 returns false, meaning we didn't find this edge to already exist
+    this.mEdge.insert(make_pair(source,destination));    //adding the edge only if statements returns false, meaning we didn't find this edge to already exist
     added = true;
 
     return added;
@@ -71,7 +81,7 @@ public:
 
         }
       }
-      //map[1][2] example or destination.weight syntax
+      //map[1][2] example or destination.weight syntax could be used
       if(soloVertex){  //returns true if the vertex has no other edges, ok to remove vertex if so
           this.sVertices.erase(source);
         }    //insert the vertices that didn't exsist before
@@ -82,7 +92,7 @@ public:
     }
 
     if(canRemove){
-      this.mEdges.erase() //HOW DO I ACTUALLY ERASE?
+      this.mEdges.erase(); //HOW DO I ACTUALLY ERASE?
     }
     return removed;
   }
@@ -93,14 +103,13 @@ public:
         for(auto i = range.first; i != range.second; i++){
           if (destination == i->second){  //returns true if the edge exsists...return the wieght if so
 
-          return i->distance ;   //IS THIS CORRECT?
-          }
+          return i->weight ;
         }
 
         return 0; //If we don't have an edge between source and destination we return 0
   }
 //getVertices(): returns a set containing the vertices in the graph
-  set <WeightedVertex> getVertices(){ //IS THE DATA TYPE CORRECT FOR THESE SETS??!?!
+  set <WeightedVertex> getVertices(){
     set<WeightedVertex> vertsInGraph;
 
     for(auto i = this.sVertices.begin(); i != this.sVertices.end(); i++){   //itterate through all vertices in the object that called this function "this"
@@ -113,15 +122,16 @@ public:
 //getAdjacent(unsigned v): returns a set containing the vertices in the graph that are adjacent to a given vertex
   set <WeightedVertex> getAdjacent(WeightedVertex v) {
     set<WeightedVertex> adjVerts;
-    bool canAdd = false;
 
     auto range = this.mEdges.equal_range(v);
     for( auto i = range.first; i != range.second; i++){ //itterate through range of v vertices to find adjacent vertices
-      if(i->second)
+    auto adj = i->second.second;
+    adjVerts.insert(adj);
     }
+  return adjVerts;
 
   }
-};
+*/};
 
 
 // CLASS IMPLEMENTATION
