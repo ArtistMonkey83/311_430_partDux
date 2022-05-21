@@ -12,13 +12,8 @@ public:
   WeightedVertex(unsigned nodeNumber, unsigned weight);
   ~WeightedVertex();
 
-  unsigned getNodeNumber();
-  unsigned getNodeWeight();
-  void setNodeNumber(unsigned vertexLabel);
-  void setNodeWeight(unsigned vertexWeight);
-//map for holding the following?
-//node number something.number
-//distance (wieght) something.distance ?
+  unsigned getNodeNumber() {return nodeNumber;}
+  unsigned getNodeWeight(){return weight;};
 };
 
 

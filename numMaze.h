@@ -13,49 +13,37 @@ using namespace std;
 //              the NxM vertex weights. This function also connects the
 //              vertices appropriately to build the represented number maze.
 // Parameters:  a graph of WeightedVertex objects
-/*
-void readMaze(Graph &inputMaze){ //nXm vertices that are not connectted?
+
+void readMaze(Graph<WeightedVertex> &graph){ //nXm vertices that are not connectted?
   //connections occur horizontally and vertically
   //Graph tempGraph;
-  unsigned n, //number of rows
+      int  n, //number of rows
            m,  //number of columns
            c = 0, //index counter
            weights; //weight variable for a vertex
-  vector<vector<WeightedVertex>> matrix;
+  vector<int> matrix;
 
   cin >> n; //number rows
   cin >> m; //number columns
 
-  for (auto i = 0; i < n; i++){   //for loop itterates through the rows
-    for(auto j = 0; j < m; j++){  //for loop iterates through the columns
-      cin >> wieghts;             //cin n*m vertex wieghts
-      matrix[i].push_back(weights);// push puack the weights for a specific row
-       }
-     }
+  for (auto i = 0; i < n*m; i++){   //for loop that iterates pushes back weights
+      cin >> weights;               //cin n*m vertex wieghts
+      matrix.push_back(weights); // push puack the weights for the whole numbMaze
+  }
 
-  for (auto i = 0; i < n; i++){
-    for(auto j = 0; j < m; j++){
-      if(i+1 < n){   // if we are out of bounds on the row, don't add
-        if(j-1 < m){  //if we are out of bounds on the column, don't add
-          WeightedVertex  input(c,weight),    //source
-                          input2,   //right destination
-                          input3;   //below destination
+  for (auto i = 0; i < n; i++){ //iterate through the rows
+    for(auto j = 0; j < m; j++){  //iterate through the columns
+          WeightedVertex  input(c,matrix[i]);    //source
+          if(c+1 <= n*m){   //indices must be between n*m value to be a valid vertex!
+            if(c+m <= n*m){ //indices must be between n*m value to be a valid vertex!
+              WeightedVertex rightAdjacent(c+1, matrix[i + j*n]);//formula for accessing the horizontal Vertex
+              WeightedVertex downAdjacent(c+m, matrix[i + j*m]);//formula for accessing the vertical vertex
 
-          input.setNodeNumber(c);  //index of the source vertex
-          input.setNodeWeight(matrix[i][j]); //weight of source vertex
-
-          input2.setNodeNumber(c+1);   //index of the next vertice to the right
-          input2.setNodeWeight(matrix[i][j+1]);  //weight of the vertex to the right of source
-
-          input3.setNodeNumber(c+m);  //index of vertice below source
-          input3.setNodeWeight(matrix[i+1][j]); //weight of the vertex below the source
-
-          add(input,input2); //adds horizontal edge to the right of source
-          add(input,input3); //adds vertical edge below source
+              graph.add(input,rightAdjacent,1); //adds horizontal edge to the right of source
+              graph.add(input,downAdjacent,1); //adds vertical edge below source
+            }
+          }
           c++;               //increments our source vertex
-
-       }
-      }
     }
    }
   return;
@@ -82,9 +70,9 @@ void readMaze(Graph &inputMaze){ //nXm vertices that are not connectted?
   }
 //D's algorithm, adjust to the weights on the vertices relax needs to be modified
   //insert vertices into priority que v.d the priority que needs to be ordered overload comparison operator for order of weighted vertex class?
-  priority_queue<WeightedVertex> theQueue; //ordered by d values! pair (v.d, WeightedVertex) than push priority_queue orders things in descending order, we need it reversed! review how to declare on a min heap
-  for (int i = 0; i != weightedGraph.sVertices.size(); i++){  //push all (PAIRS) the vertices present into theQueue so we can pop them eventually
-
+  priority_queue<unsigned,vector<unsigned>, greater<unsigned>> theQueue; //ordered by d values! pair (v.d, WeightedVertex) than push priority_queue orders things in descending order, we need it reversed! review how to declare on a min heap
+  for (auto i = weightedGraph.sVertices.begin(); i != weightedGraph.sVertices.end(); i++){  //push all (PAIRS) the vertices present into theQueue so we can pop them eventually
+    theQueue.push(*i);  //pushing back the dreferenced pair of information in weightedGraph
   }
 
   while(!theQueue.empty()){   //while priorty que is not empty, pop and then extract adjacent vertex
